@@ -1,0 +1,12 @@
+{
+  "env": {
+    "MAGIC_SECRET_KEY": "",
+    "MAGIC_PUB_KEY": ""
+  },
+  "build": {
+    "env": {
+      "MAGIC_SECRET_KEY": "",
+      "MAGIC_PUB_KEY": ""
+    }
+  }
+}
