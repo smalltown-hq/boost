@@ -1,24 +1,29 @@
 import AuthService from "services/auth";
+import ApiService from "services/api";
 import CookieService from "services/cookie";
 
 export default async (req, res) => {
   try {
-    // get the decentralized ID from the authorization header
-    const did = req.headers.authorization
-      ?.split("Bearer")
-      .pop()
-      .trim();
+    const tokenRequest = await ApiService.fetch("/user/create", {
+      method: "POST",
+      headers: {
+        authorization: req.headers.authorization,
+      },
+    });
 
-    // get the user data from Magic Link using the decentralized Id and use it
-    // to create a token to store as a cookie and allow access to our
-    // restricted resources
-    const token = await AuthService.getUserAndCreateToken(did);
-
-    // Tell the browser to set this cookie
-    res.setHeader("Set-Cookie", CookieService.createCookie(token));
-    res.end();
+    if (tokenRequest.ok) {
+      // Tell the browser to set this cookie
+      res.setHeader(
+        "Set-Cookie",
+        CookieService.createCookie(await tokenRequest.text())
+      );
+      res.end();
+    } else {
+      throw new Error(
+        (await tokenRequest.text()) || "An unexpected error occured."
+      );
+    }
   } catch (error) {
-    console.log(error);
-    res.status(401).end();
+    res.status(401).end(error.message);
   }
 };

@@ -6,6 +6,7 @@ export default function Styles() {
       :root {
         --background: #ffffff;
         --accent-1: #f3f6e6;
+        --accent-2: #e2e2e2;
         --foreground: #383a48;
         --grey: #898989;
         --primary: #7fd6c2;

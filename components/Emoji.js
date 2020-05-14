@@ -7,7 +7,7 @@ export default function Emoji(props) {
         {props.children}
       </span>
       <style jsx>{`
-        padding-left: 0.25rem;
+        padding: 0 0.25rem;
       `}</style>
     </>
   );

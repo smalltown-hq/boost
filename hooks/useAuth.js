@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
+import ApiService from "services/api";
 
-const fetcher = (route) =>
-  fetch(route)
-    .then((r) => r.json())
+function fetcher(route) {
+  return ApiService.fetch(route, { credentials: "include" })
+    .then((r) => r.ok && r.json())
     .then((user) => user || null);
+}
 
 export default function useAuth({ redirectTo } = {}) {
-  const { data: user, error } = useSWR("/api/user", fetcher);
+  const { data: user, error } = useSWR("/user", fetcher);
   const loading = user === undefined;
 
   // handle redirections
