@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Link from "next/link";
 import Button from "components/Button";
 import HomeIcon from "vectors/HomeIcon";
@@ -9,16 +10,67 @@ import VercelDeploy from "vectors/buttons/VercelDeploy";
 import Watch from "vectors/buttons/Watch";
 import Read from "vectors/buttons/Read";
 import useAuth from "hooks/useAuth";
+import DeployService from "services/deploy";
+import ApiService from "services/api";
 
-export default function Home() {
+async function fetcher(route) {
+  const eventsRequest = await ApiService.fetch(route, {
+    credentials: "include",
+  });
+
+  console.log(eventsRequest.status);
+
+  if (eventsRequest.ok) {
+    return eventsRequest.json();
+  }
+
+  return [];
+}
+
+export default function Home(props) {
   const user = useAuth();
+  const { data: events } = useSWR(() => {
+    if (!user) {
+      throw new Error("Cannot get events without user.");
+    }
+
+    return `/events/list?user=${user._id}`;
+  }, fetcher);
 
   return (
     <>
       {user && (
         <section className="user">
-          {user.events?.length > 0 ? (
-            "TODO: add list of events"
+          <p style={{ paddingBottom: "1rem", width: "100%" }}>
+            <strong>Your events</strong>
+          </p>
+          {events?.length > 0 ? (
+            <div className="events">
+              {events.map((event) => {
+                return (
+                  <Link href={`/event/${event._id}`}>
+                    <div className="event">
+                      <div className="event__title">{event.name}</div>
+                      <div className="event__stats">
+                        <div className="stat">
+                          <strong>
+                            {Object.values(event.reactions || {}).reduce(
+                              (sum, count) => sum + count,
+                              0
+                            )}
+                          </strong>{" "}
+                          Reactions
+                        </div>
+                        <div className="stat">
+                          <strong>{event.questions.length}</strong> Questions
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+              <div className="event event--empty" />
+            </div>
           ) : (
             <>
               <p className="user__empty-text">You've never boosted an event!</p>
@@ -102,9 +154,9 @@ export default function Home() {
               Built & hosted on <a href="https://vercel.com">Vercel</a>
             </h2>
             <p className="resource__description">
-              Deploy this exact app with the click of a button!
+              Deploy this app with the click of a button!
             </p>
-            <a href="">
+            <a href="" onClick={DeployService.log}>
               <VercelDeploy />
             </a>
           </div>
@@ -150,11 +202,13 @@ export default function Home() {
 
         .resources__pair {
           display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
         .resources {
           width: 100vw;
-          height: 100vh;
+          min-height: 100vh;
           background: var(--accent-1);
           display: flex;
           flex-direction: column;
@@ -172,30 +226,28 @@ export default function Home() {
         }
 
         .feature__content {
-          margin: 0 3rem;
+          margin: 0 1rem;
           max-width: 400px;
         }
 
         .feature__image {
-          width: 400px;
-          height: 400px;
+          width: 250px;
+          height: 250px;
           border-radius: 50%;
+          margin: 0 1rem;
           background: #fff;
-          margin: 0 3rem;
           display: flex;
           align-items: center;
           justify-content: center;
-        }
-
-        .feature:nth-child(odd) {
-          flex-direction: row-reverse;
         }
 
         .feature {
           background: var(--accent-1);
           width: 100vw;
           min-height: 100vh;
+          padding: 2rem;
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           justify-content: center;
         }
@@ -203,9 +255,10 @@ export default function Home() {
         // HERO
         :global(.hero__icon) {
           position: absolute;
-          right: 20%;
-          bottom: -2.5%;
+          right: -5%;
+          bottom: -20%;
           z-index: 1;
+          transform: rotate(-45deg);
         }
 
         :global(.hero__curve) {
@@ -214,13 +267,17 @@ export default function Home() {
           width: 100vw;
         }
 
+        .hero__content {
+          padding-bottom: 4rem;
+        }
+
         .hero__content > :global(button) {
           padding: 1rem 2rem;
           font-size: 1.25rem;
         }
 
         .hero__title {
-          font-size: 2.75rem;
+          font-size: 2rem;
           max-width: 550px;
           padding-bottom: 2rem;
         }
@@ -231,8 +288,9 @@ export default function Home() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: calc(100vh - 120px);
+          min-height: calc(100vh - 120px);
           width: 100vw;
+          padding: 0 1rem;
         }
 
         // USER
@@ -240,23 +298,105 @@ export default function Home() {
           padding-bottom: 1rem;
         }
 
+        .events {
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          width: 100vw;
+          overflow-x: scroll;
+        }
+
+        .event {
+          background: var(--background);
+          border-radius: var(--border-radius);
+          display: flex;
+          flex-direction: column;
+          padding: 0.5rem;
+          min-width: 200px;
+          margin: 0 1rem;
+        }
+
+        .event.event--empty {
+          background: transparent;
+          min-width: 0;
+          margin: 0;
+        }
+
+        .event__title {
+          font-size: 1rem;
+          font-weight: bold;
+        }
+
+        .event__stats {
+          display: flex;
+          font-size: 0.75rem;
+        }
+
+        .event__stats > .stat {
+          margin-right: 0.25rem;
+        }
+
         .user {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 1rem 2rem;
+          padding: 1rem;
           width: 100vw;
           background: var(--accent-1);
+        }
+
+        @media (min-resolution: 3dppx) {
+          .hero__title {
+            font-size: 2.75rem;
+          }
+
+          :global(.hero__icon) {
+            bottom: -2.5%;
+          }
+        }
+
+        @media screen and (min-width: 750px) {
+          .resources__pair {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+          }
+
+          .feature__image {
+            width: 30vw;
+            height: 30vw;
+            margin: 0 3rem;
+          }
+
+          .feature {
+            flex-wrap: nowrap;
+            min-height: 60vh;
+          }
+
+          .feature:nth-child(odd) {
+            flex-direction: row-reverse;
+          }
+
+          .hero__title {
+            font-size: 2.75rem;
+          }
+
+          :global(.hero__icon) {
+            transform: rotate(0deg);
+            bottom: -2.5%;
+            right: 20%;
+          }
         }
       `}</style>
     </>
   );
 }
 
-export function getStaticProps() {
-  // fetch number of depoys
+export async function getStaticProps() {
   return {
-    props: {},
+    props: {
+      deployCount: (await DeployService.getCount()) || 0,
+    },
+    unstable_revalidate: 60,
   };
 }

@@ -80,7 +80,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="31"
@@ -89,7 +89,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="74"
@@ -98,7 +98,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -107,7 +107,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -116,7 +116,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -125,7 +125,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="188"
@@ -134,7 +134,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -143,7 +143,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="31"
@@ -152,7 +152,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="74"
@@ -161,7 +161,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -170,7 +170,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -179,7 +179,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -188,7 +188,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="188"
@@ -197,7 +197,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -206,7 +206,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="31"
@@ -215,7 +215,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="74"
@@ -224,7 +224,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -233,7 +233,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -242,7 +242,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -251,7 +251,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="188"
@@ -260,7 +260,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -269,7 +269,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="53"
@@ -278,7 +278,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="80"
@@ -287,7 +287,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="104"
@@ -296,7 +296,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="154"
@@ -305,7 +305,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="183"
@@ -314,7 +314,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -323,7 +323,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="55"
@@ -332,7 +332,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -341,7 +341,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -350,7 +350,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -359,7 +359,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -368,7 +368,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="55"
@@ -377,7 +377,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -386,7 +386,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -395,7 +395,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -404,7 +404,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="8"
@@ -413,7 +413,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="55"
@@ -422,7 +422,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="98"
@@ -431,7 +431,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="123"
@@ -440,7 +440,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <rect
         x="163"
@@ -449,7 +449,7 @@ export default function Question(props) {
         height="8"
         rx="2"
         fill="#383A48"
-        fill-opacity="0.67"
+        fillOpacity="0.67"
       />
       <defs>
         <radialGradient
@@ -460,8 +460,8 @@ export default function Question(props) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(207.248 145.522) rotate(90.125) scale(4.58287 3.6081)"
         >
-          <stop offset="0.6" stop-color="#FFCA28" />
-          <stop offset="1" stop-color="#FFB300" />
+          <stop offset="0.6" stopColor="#FFCA28" />
+          <stop offset="1" stopColor="#FFB300" />
         </radialGradient>
         <radialGradient
           id="paint1_radial"
@@ -471,8 +471,8 @@ export default function Question(props) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(209.943 146.961) rotate(176.727) scale(1.48859 0.728389)"
         >
-          <stop offset="0.5993" stop-color="#FFCA28" />
-          <stop offset="1" stop-color="#FFB300" />
+          <stop offset="0.5993" stopColor="#FFCA28" />
+          <stop offset="1" stopColor="#FFB300" />
         </radialGradient>
         <radialGradient
           id="paint2_radial"
@@ -482,8 +482,8 @@ export default function Question(props) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(210.178 147.981) rotate(-179.936) scale(1.67532 0.671831)"
         >
-          <stop offset="0.5993" stop-color="#FFCA28" />
-          <stop offset="1" stop-color="#FFB300" />
+          <stop offset="0.5993" stopColor="#FFCA28" />
+          <stop offset="1" stopColor="#FFB300" />
         </radialGradient>
         <radialGradient
           id="paint3_radial"
@@ -493,8 +493,8 @@ export default function Question(props) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(209.851 149.797) rotate(-179.726) scale(1.40695 0.732495)"
         >
-          <stop offset="0.5993" stop-color="#FFCA28" />
-          <stop offset="1" stop-color="#FFB300" />
+          <stop offset="0.5993" stopColor="#FFCA28" />
+          <stop offset="1" stopColor="#FFB300" />
         </radialGradient>
         <radialGradient
           id="paint4_radial"
@@ -504,8 +504,8 @@ export default function Question(props) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(210.051 148.938) rotate(-179.934) scale(1.60296 0.666743)"
         >
-          <stop offset="0.5993" stop-color="#FFCA28" />
-          <stop offset="1" stop-color="#FFB300" />
+          <stop offset="0.5993" stopColor="#FFCA28" />
+          <stop offset="1" stopColor="#FFB300" />
         </radialGradient>
       </defs>
     </svg>

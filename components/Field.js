@@ -15,6 +15,7 @@ export default function Field(props) {
 
         .error {
           color: var(--error);
+          padding: 0;
         }
       `}</style>
     </>

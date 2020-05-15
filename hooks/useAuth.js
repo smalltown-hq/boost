@@ -18,6 +18,7 @@ export default function useAuth({ redirectTo } = {}) {
     if (!redirectTo || loading) return;
 
     if (redirectTo && !user) {
+      localStorage.setItem("_bRedirectTo", Router.route);
       Router.push(redirectTo);
     }
   }, [redirectTo, user, loading]);

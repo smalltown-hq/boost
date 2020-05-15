@@ -74,6 +74,7 @@ export default function NewEvent() {
           right: 20%;
           bottom: -1%;
           z-index: 1;
+          display: none;
         }
 
         :global(.main__curve) {
@@ -107,6 +108,17 @@ export default function NewEvent() {
           min-height: calc(100vh - 120px);
           width: 100vw;
           overflow: hidden;
+          padding: 0 1rem;
+        }
+
+        @media screen and (min-width: 750px) {
+          .main {
+            min-height: calc(100vh - 120px);
+          }
+
+          :global(.main__icon) {
+            display: initial;
+          }
         }
       `}</style>
     </>

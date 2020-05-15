@@ -116,6 +116,7 @@ export default function How() {
         }
 
         .main__content {
+          text-align: center;
           max-width: 500px;
           padding-bottom: 4rem;
         }

@@ -8,8 +8,8 @@ import Input from "components/Input";
 import Label from "components/Label";
 import Field from "components/Field";
 import Button from "components/Button";
-import MagicClientService from "services/magic-client";
 import useAuth from "hooks/useAuth";
+import MagicClientService from "services/magic-client";
 
 const SignInUpSchema = Yup.object({
   email: Yup.string()
@@ -67,7 +67,7 @@ export default function Login() {
 
     if (authRequest.ok) {
       // Logging into our API using Magic Link was successful!
-      Router.push("/");
+      Router.push(localStorage.getItem("_bRedirectTo") || "/");
     } else {
       formikContext.setFieldError({ email: await authRequest.text() });
     }
@@ -114,6 +114,7 @@ export default function Login() {
           right: 20%;
           bottom: -2.5%;
           z-index: 1;
+          display: none;
         }
 
         :global(.main__curve) {
@@ -145,9 +146,20 @@ export default function Login() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: calc(100vh - 120px);
+          min-height: calc(100vh - 120px);
           width: 100vw;
           overflow: hidden;
+          padding: 0 1rem;
+        }
+
+        @media screen and (min-width: 750px) {
+          .main {
+            min-height: calc(100vh - 120px);
+          }
+
+          :global(.main__icon) {
+            display: initial;
+          }
         }
       `}</style>
     </>

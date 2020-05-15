@@ -1,4 +1,3 @@
-import AuthService from "services/auth";
 import ApiService from "services/api";
 import CookieService from "services/cookie";
 

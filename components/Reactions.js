@@ -22,7 +22,7 @@ const REACTIONS = [
 
 const variants = {
   bounce: {
-    y: [-5, 0, 5],
+    y: [-2, 0, 2],
     transition: {
       yoyo: Infinity,
       duration: 0.25,
@@ -58,24 +58,25 @@ export default function Reactions(props) {
         {REACTIONS.map(([key, Emoji]) => {
           return (
             <div className="reaction" key={key}>
-              <div className="reaction__emoji">
+              <div
+                className="reaction__emoji"
+                onClick={() =>
+                  props.onReaction instanceof Function && props.onReaction(key)
+                }
+              >
                 <motion.div
                   initial={{ y: 0 }}
                   className="emoji__container"
                   onTap={() => setTapped(key)}
                   animate={afterTap(key)}
-                  whileHover={variants.bounce}
+                  whileHover={tapped !== key && variants.bounce}
                   onAnimationComplete={() => setTapped()}
-                  onClick={() =>
-                    props.onReaction instanceof Function &&
-                    props.onReaction(key)
-                  }
                 >
                   <Emoji />
                 </motion.div>
               </div>
               <p className="reaction__count">
-                {props.reactions ? props.reactions[key] : 0}
+                {(props.reactions && props.reactions[key]) || 0}
               </p>
             </div>
           );
@@ -138,8 +139,16 @@ export default function Reactions(props) {
 
         .reactions {
           flex-direction: row;
+          flex-wrap: wrap;
           padding: 1rem 0;
-          justify-content: space-between;
+          justify-content: space-evenly;
+        }
+
+        @media screen and (min-width: 500px) {
+          .reactions {
+            flex-wrap: nowrap;
+            justify-content: space-between;
+          }
         }
       `}</style>
     </>

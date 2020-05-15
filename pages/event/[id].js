@@ -69,7 +69,10 @@ export default function Event(props) {
       ...event,
       reactions: {
         ...event.reactions,
-        [reaction]: (event.reactions[reaction] ?? 0) + 1,
+        [reaction]:
+          (event.reactions && event.reactions[reaction]
+            ? event.reactions[reaction]
+            : 0) + 1,
       },
     });
 
@@ -248,6 +251,7 @@ export default function Event(props) {
         .event__container {
           width: 100%;
           max-width: 600px;
+          padding: 1rem;
         }
 
         .event__container,

@@ -40,6 +40,7 @@ export default function Styles() {
         box-sizing: border-box;
         font-family: var(--font);
         background: var(--background);
+        overflow-x: hidden;
       }
 
       a {
