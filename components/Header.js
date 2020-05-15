@@ -58,7 +58,7 @@ export default function Header(props) {
               </div>
             )}
             <a
-              href="TODO:"
+              href="https://vercel.com/import/project?template=https://github.com/flawk-community/boost"
               onClick={DeployService.log}
               style={{ marginRight: "1rem" }}
             >
@@ -94,7 +94,10 @@ export default function Header(props) {
                       <span className="logo-container__title">Boost</span>
                     </div>
                     <div className="menu__group">
-                      <a href="TODO:" onClick={DeployService.log}>
+                      <a
+                        href="https://vercel.com/import/project?template=https://github.com/flawk-community/boost"
+                        onClick={DeployService.log}
+                      >
                         <VercelDeploy height="48" />
                       </a>
                       Clone this app in one click

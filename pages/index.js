@@ -152,7 +152,10 @@ export default function Home(props) {
             <p className="resource__description">
               Deploy this app with the click of a button!
             </p>
-            <a href="" onClick={DeployService.log}>
+            <a
+              href="https://vercel.com/import/project?template=https://github.com/flawk-community/boost"
+              onClick={DeployService.log}
+            >
               <VercelDeploy />
             </a>
           </div>

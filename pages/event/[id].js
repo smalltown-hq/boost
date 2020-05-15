@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -12,6 +12,8 @@ import Question from "components/Question";
 import QuestionPlaceholder from "components/QuestionPlaceholder";
 import ApiService from "services/api";
 import serialize from "utils/serialize";
+import Copy from "vectors/Copy";
+import Close from "vectors/Close";
 
 function fetcher(route) {
   return fetch(route).then((r) => (r.ok ? r.json() : {}));
@@ -23,6 +25,9 @@ const QuestionAndResponseSchema = Yup.object().shape({
 
 export default function Event(props) {
   const { isFallback, query } = useRouter();
+  const [isSnackOpen, setSnackOpen] = useState(
+    process.browser && !Boolean(+localStorage.getItem(`copy-snack-${query.id}`))
+  );
   const { data: event, error, mutate: mutateEvent } = useSWR(
     () => {
       if (isFallback) {
@@ -36,6 +41,12 @@ export default function Event(props) {
       initialData: isFallback ? {} : props.event,
     }
   );
+
+  useEffect(() => {
+    if (!isSnackOpen && process.browser) {
+      localStorage.setItem(`copy-snack-${query.id}`, 1);
+    }
+  }, [isSnackOpen]);
 
   useEffect(() => {
     fetch(`/api/events/${query.id}/join`).then(
@@ -88,9 +99,37 @@ export default function Event(props) {
     }
   };
 
+  const copy = async () => {
+    await navigator.clipboard?.writeText(
+      `https://getboost.app/event/${query.id}`
+    );
+    setSnackOpen(false);
+  };
+
   return (
     <>
       <section className={`event ${isFallback ? "event--fallback" : ""}`}>
+        {isSnackOpen && (
+          <div className="snack">
+            Click{" "}
+            <strong
+              onClick={copy}
+              style={{
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "0 0.25rem",
+              }}
+            >
+              here <Copy />
+            </strong>{" "}
+            to copy and share the link with your community!
+            <Close
+              style={{ margin: "0 1rem", cursor: "pointer" }}
+              onClick={() => setSnackOpen(false)}
+            />
+          </div>
+        )}
         <div className="event__container">
           <div className="event__title-group">
             <h1 className="event__title">Welcome to - {event.name}</h1>
@@ -162,6 +201,17 @@ export default function Event(props) {
         </div>
       </section>
       <style jsx>{`
+        .snack {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          width: 100vw;
+          background: var(--accent-1);
+          padding: 1rem;
+          text-align: center;
+        }
+
         .question__wrapper {
           margin-bottom: 1rem;
         }
