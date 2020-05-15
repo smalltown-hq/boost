@@ -26,7 +26,9 @@ const QuestionAndResponseSchema = Yup.object().shape({
 export default function Event(props) {
   const { isFallback, query } = useRouter();
   const [isSnackOpen, setSnackOpen] = useState(
-    process.browser && !Boolean(+localStorage.getItem(`copy-snack-${query.id}`))
+    process.browser
+      ? !Boolean(+localStorage.getItem(`copy-snack-${query.id}`))
+      : true
   );
   const { data: event, error, mutate: mutateEvent } = useSWR(
     () => {
@@ -108,28 +110,28 @@ export default function Event(props) {
 
   return (
     <>
+      {isSnackOpen && (
+        <div className="snack">
+          Click{" "}
+          <strong
+            onClick={copy}
+            style={{
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "0 0.25rem",
+            }}
+          >
+            here <Copy />
+          </strong>{" "}
+          to copy and share the link with your community!
+          <Close
+            style={{ margin: "0 1rem", cursor: "pointer" }}
+            onClick={() => setSnackOpen(false)}
+          />
+        </div>
+      )}
       <section className={`event ${isFallback ? "event--fallback" : ""}`}>
-        {isSnackOpen && (
-          <div className="snack">
-            Click{" "}
-            <strong
-              onClick={copy}
-              style={{
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "0 0.25rem",
-              }}
-            >
-              here <Copy />
-            </strong>{" "}
-            to copy and share the link with your community!
-            <Close
-              style={{ margin: "0 1rem", cursor: "pointer" }}
-              onClick={() => setSnackOpen(false)}
-            />
-          </div>
-        )}
         <div className="event__container">
           <div className="event__title-group">
             <h1 className="event__title">Welcome to - {event.name}</h1>
