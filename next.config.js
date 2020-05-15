@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    MAGIC_PUB_KEY: process.env.MAGIC_PUB_KEY,
+    magicPublicKey: process.env.MAGIC_PUB_KEY,
   },
 };

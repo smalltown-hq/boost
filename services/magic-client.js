@@ -4,7 +4,7 @@ let magic;
 
 function getInstance() {
   if (!magic) {
-    magic = new Magic(process.env.MAGIC_PUB_KEY);
+    magic = new Magic(process.env.magicPublicKey);
   }
 
   return magic;
