@@ -16,7 +16,7 @@ import id from "utils/id";
 import ThumbUp from "vectors/emoji/ThumbUp";
 
 function fetcher(route) {
-  return ApiService.fetch(route).then((r) => (r.ok ? r.json() : {}));
+  return fetch(route).then((r) => (r.ok ? r.json() : {}));
 }
 
 const QuestionAndResponseSchema = Yup.object().shape({
@@ -32,7 +32,7 @@ export default function Question(props) {
   const user = useAuth();
   const [areCommentsOpen, setCommentsOpen] = useState(false);
   const { data: question, mutate: mutateQuestion } = useSWR(
-    `/questions/${props.questionId}`,
+    `/api/questions/${props.questionId}`,
     fetcher
   );
 
@@ -56,8 +56,8 @@ export default function Question(props) {
       votes: Array.from(votes),
     });
 
-    const voteRequest = await ApiService.fetch(
-      `/questions/${props.questionId}/vote?voter=${uniqueId}`
+    const voteRequest = await fetch(
+      `/api/questions/${props.questionId}/vote?voter=${uniqueId}`
     );
 
     if (voteRequest.ok) {
@@ -79,10 +79,13 @@ export default function Question(props) {
     });
 
     // TODO: Maybe make this forced authorized
-    const commentRequest = await ApiService.fetch(
-      `/questions/${props.questionId}/comment`,
+    const commentRequest = await fetch(
+      `/api/questions/${props.questionId}/comment`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       }
     );

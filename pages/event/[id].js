@@ -11,9 +11,10 @@ import Button from "components/Button";
 import Question from "components/Question";
 import QuestionPlaceholder from "components/QuestionPlaceholder";
 import ApiService from "services/api";
+import serialize from "utils/serialize";
 
 function fetcher(route) {
-  return ApiService.fetch(route).then((r) => (r.ok ? r.json() : {}));
+  return fetch(route).then((r) => (r.ok ? r.json() : {}));
 }
 
 const QuestionAndResponseSchema = Yup.object().shape({
@@ -28,7 +29,7 @@ export default function Event(props) {
         throw new Error();
       }
 
-      return `/events/${query.id}`;
+      return `/api/events/${query.id}`;
     },
     fetcher,
     {
@@ -37,23 +38,25 @@ export default function Event(props) {
   );
 
   useEffect(() => {
-    ApiService.fetch(`/events/${query.id}/join`).then(
+    fetch(`/api/events/${query.id}/join`).then(
       async (response) => response.ok && mutateEvent(await response.json())
     );
 
     window.addEventListener("beforeunload", (event) =>
-      ApiService.fetch(`/events/${query.id}/leave`)
+      fetch(`/api/events/${query.id}/leave`)
     );
 
-    return () => ApiService.fetch(`/events/${query.id}/leave`);
+    return () => fetch(`/api/events/${query.id}/leave`);
   }, [query.id]);
 
   const handleQuestionSubmit = async (values, formikContext) => {
-    const questionRequest = await ApiService.fetch(
-      `/questions/create?event=${query.id}`,
+    const questionRequest = await fetch(
+      `/api/questions/create?event=${query.id}`,
       {
         method: "POST",
-        // credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       }
     );
@@ -76,8 +79,8 @@ export default function Event(props) {
       },
     });
 
-    const reactionRequest = await ApiService.fetch(
-      `/events/${query.id}/react?reaction=${reaction}`
+    const reactionRequest = await fetch(
+      `/api/events/${query.id}/react?reaction=${reaction}`
     );
 
     if (reactionRequest.ok) {
@@ -270,7 +273,9 @@ export default function Event(props) {
 }
 
 export async function getStaticProps({ params }) {
-  const event = await fetcher(`/events/${params.id}`);
+  const event = serialize(
+    await ApiService.fetch(`/events/${params.id}`).then((r) => r.ok && r.json())
+  );
 
   return {
     props: { event },

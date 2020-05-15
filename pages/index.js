@@ -14,9 +14,7 @@ import DeployService from "services/deploy";
 import ApiService from "services/api";
 
 async function fetcher(route) {
-  const eventsRequest = await ApiService.fetch(route);
-
-  console.log(eventsRequest.status);
+  const eventsRequest = await fetch(route);
 
   if (eventsRequest.ok) {
     return eventsRequest.json();
@@ -32,7 +30,7 @@ export default function Home(props) {
       throw new Error("Cannot get events without user.");
     }
 
-    return `/events/list?user=${user._id}`;
+    return `/api/events/list?user=${user._id}`;
   }, fetcher);
 
   return (

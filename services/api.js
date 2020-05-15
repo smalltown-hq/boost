@@ -5,9 +5,6 @@ const API_HOST =
 
 export default {
   fetch(route, options = {}) {
-    return fetch(`${API_HOST}/api${route}`, {
-      ...options,
-      credentials: "include",
-    });
+    return fetch(`${API_HOST}/api${route}`, options);
   },
 };

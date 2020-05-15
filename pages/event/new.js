@@ -18,9 +18,11 @@ export default function NewEvent() {
   const user = useAuth({ redirectTo: "/login" });
 
   const handleSubmit = async (values, formikContext) => {
-    const eventCreateRequest = await ApiService.fetch("/events/create", {
+    const eventCreateRequest = await fetch("/api/events/create", {
       method: "POST",
-      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(values),
     });
 

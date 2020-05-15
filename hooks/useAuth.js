@@ -4,13 +4,13 @@ import useSWR from "swr";
 import ApiService from "services/api";
 
 function fetcher(route) {
-  return ApiService.fetch(route)
+  return fetch(route)
     .then((r) => r.ok && r.json())
     .then((user) => user || null);
 }
 
 export default function useAuth({ redirectTo } = {}) {
-  const { data: user, error } = useSWR("/user", fetcher);
+  const { data: user, error } = useSWR("/api/user", fetcher);
   const loading = user === undefined;
 
   // handle redirections
