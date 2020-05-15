@@ -4,7 +4,7 @@ import useSWR from "swr";
 import ApiService from "services/api";
 
 function fetcher(route) {
-  return ApiService.fetch(route, { credentials: "include" })
+  return ApiService.fetch(route)
     .then((r) => r.ok && r.json())
     .then((user) => user || null);
 }

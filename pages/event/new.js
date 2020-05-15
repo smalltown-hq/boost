@@ -20,7 +20,7 @@ export default function NewEvent() {
   const handleSubmit = async (values, formikContext) => {
     const eventCreateRequest = await ApiService.fetch("/events/create", {
       method: "POST",
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify(values),
     });
 

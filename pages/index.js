@@ -15,7 +15,7 @@ import ApiService from "services/api";
 
 async function fetcher(route) {
   const eventsRequest = await ApiService.fetch(route, {
-    credentials: "include",
+    // credentials: "include",
   });
 
   console.log(eventsRequest.status);

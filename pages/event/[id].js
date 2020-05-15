@@ -53,7 +53,7 @@ export default function Event(props) {
       `/questions/create?event=${query.id}`,
       {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
         body: JSON.stringify(values),
       }
     );
