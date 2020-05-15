@@ -4,13 +4,10 @@ const API_HOST =
     : "http://localhost:3001";
 
 export default {
-  fetch(route, options) {
+  fetch(route, options = {}) {
     return fetch(`${API_HOST}/api${route}`, {
       ...options,
-      headers: {
-        ...(options?.headers || {}),
-        Cookie: process.browser && document.cookie,
-      },
+      credentials: "include",
     });
   },
 };

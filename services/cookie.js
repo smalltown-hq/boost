@@ -16,7 +16,7 @@ function createCookie(data) {
     // TODO: read more about this
     path: "/",
     // TODO: read more about this
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    sameSite: "lax",
   });
 }
 
