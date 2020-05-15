@@ -14,9 +14,7 @@ import DeployService from "services/deploy";
 import ApiService from "services/api";
 
 async function fetcher(route) {
-  const eventsRequest = await ApiService.fetch(route, {
-    // credentials: "include",
-  });
+  const eventsRequest = await ApiService.fetch(route);
 
   console.log(eventsRequest.status);
 
