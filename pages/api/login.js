@@ -1,9 +1,9 @@
-import ApiService from "services/api";
+import DataService from "services/data";
 import CookieService from "services/cookie";
 
 export default async (req, res) => {
   try {
-    const tokenRequest = await ApiService.fetch("/user/create", {
+    const tokenRequest = await DataService.fetch("/user/create", {
       method: "POST",
       headers: {
         authorization: req.headers.authorization,
@@ -11,11 +11,7 @@ export default async (req, res) => {
     });
 
     if (tokenRequest.ok) {
-      // Tell the browser to set this cookie
-      res.setHeader(
-        "Set-Cookie",
-        CookieService.createCookie(await tokenRequest.text())
-      );
+      CookieService.setTokenCookie(res, await tokenRequest.text());
       res.end();
     } else {
       throw new Error(
@@ -23,6 +19,7 @@ export default async (req, res) => {
       );
     }
   } catch (error) {
+    console.log(error);
     res.status(401).end(error.message);
   }
 };

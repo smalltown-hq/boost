@@ -11,13 +11,16 @@ import Textarea from "components/Textarea";
 import Button from "components/Button";
 import Question from "components/Question";
 import QuestionPlaceholder from "components/QuestionPlaceholder";
-import ApiService from "services/api";
 import serialize from "utils/serialize";
 import Copy from "vectors/Copy";
 import Close from "vectors/Close";
+import ApiService from "services/api";
+
+// Used in getStaticProps
+import DataService from "services/data";
 
 function fetcher(route) {
-  return fetch(route).then((r) => (r.ok ? r.json() : {}));
+  return ApiService.get(route).then((r) => (r.ok ? r.json() : {}));
 }
 
 const QuestionAndResponseSchema = Yup.object().shape({
@@ -51,12 +54,14 @@ export default function Event(props) {
   }, [event]);
 
   useEffect(() => {
-    fetch(`/api/events/${query.id}/join`).then(
+    // Sockets would be a better implementation for this,
+    // to keep it simple we will use HTTP requests
+    ApiService.get(`/api/events/${query.id}/join`).then(
       async (response) => response.ok && mutateEvent(await response.json())
     );
 
     window.addEventListener("beforeunload", (event) =>
-      fetch(`/api/events/${query.id}/leave`)
+      ApiService.get(`/api/events/${query.id}/leave`)
     );
 
     const snack = localStorage.getItem(`copy-snack-${query.id}`);
@@ -65,22 +70,21 @@ export default function Event(props) {
       setTimeout(() => setSnackOpen(true), 3000);
     }
 
-    return () => fetch(`/api/events/${query.id}/leave`);
+    return () => ApiService.get(`/api/events/${query.id}/leave`);
   }, [query.id]);
 
   const handleQuestionSubmit = async (values, formikContext) => {
     mutateEvent(
-      {
+      (event) => ({
         ...event,
         questions: [...event.questions, "temp"],
-      },
+      }),
       false
     );
 
-    const questionRequest = await fetch(
+    const questionRequest = await ApiService.post(
       `/api/questions/create?event=${query.id}`,
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,31 +96,53 @@ export default function Event(props) {
       formikContext.resetForm();
       const updatedEvent = await questionRequest.json();
 
-      setLoadedQuestions([
-        ...loadedQuestions,
-        updatedEvent.questions[updatedEvent.questions.length - 1],
-      ]);
+      const newQuestion =
+        updatedEvent.questions[updatedEvent.questions.length - 1];
+
+      setLoadedQuestions([...loadedQuestions, newQuestion]);
+
+      formikContext.setErrors({
+        general: {
+          content: (
+            <span
+              onClick={() => {
+                document
+                  .getElementById(newQuestion)
+                  ?.scrollIntoView({ behavior: "smooth" });
+
+                formikContext.setErrors({});
+              }}
+            >
+              Question asked! Click here to focus it.
+            </span>
+          ),
+        },
+      });
 
       mutateEvent(updatedEvent);
+
+      setTimeout(() => {
+        formikContext.setErrors({});
+      }, 2500);
     }
   };
 
   const handleReaction = async (reaction) => {
     mutateEvent(
-      {
+      (event) => ({
         ...event,
         reactions: {
-          ...event.reactions,
+          ...event?.reactions,
           [reaction]:
-            (event.reactions && event.reactions[reaction]
-              ? event.reactions[reaction]
+            (event?.reactions && event?.reactions[reaction]
+              ? event?.reactions[reaction]
               : 0) + 1,
         },
-      },
+      }),
       false
     );
 
-    const reactionRequest = await fetch(
+    const reactionRequest = await ApiService.get(
       `/api/events/${query.id}/react?reaction=${reaction}`
     );
 
@@ -187,7 +213,20 @@ export default function Event(props) {
                   </Field>
                   <div className="button-group">
                     {!isFallback && (
-                      <Button loading={isSubmitting} disabled={!isValid}>
+                      <Button
+                        loading={isSubmitting}
+                        disabled={!isValid}
+                        status={
+                          <span
+                            style={{
+                              color: errors.general?.color || "var(--success)",
+                            }}
+                          >
+                            {errors.general?.content}
+                          </span>
+                        }
+                        reverse
+                      >
                         Ask
                       </Button>
                     )}
@@ -414,8 +453,12 @@ export default function Event(props) {
 }
 
 export async function getStaticProps({ params }) {
+  // This is only run in node environemnt so we can call the
+  // DataService directly
   const event = serialize(
-    await ApiService.fetch(`/events/${params.id}`).then((r) => r.ok && r.json())
+    await DataService.fetch(`/events/${params.id}`).then(
+      (r) => r.ok && r.json()
+    )
   );
 
   return {

@@ -1,11 +1,12 @@
+import DataService from "services/data";
 import ApiService from "services/api";
 
 export default {
   log() {
-    return fetch("/api/deploy", { method: "POST" });
+    return ApiService.post("/api/deploy");
   },
   getCount() {
-    return ApiService.fetch("/api/deploy/get")
+    return DataService.fetch("/api/deploy/get")
       .then((response) => response.ok && response.json())
       .then(({ count }) => count);
   },

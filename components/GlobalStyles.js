@@ -12,6 +12,7 @@ export default function Styles() {
         --primary: #7fd6c2;
         --yellow: #f6e049;
         --error: #e0719e;
+        --success: #3ab795;
         --font: "Poppins", sans-serif;
         --border-radius: 4px;
       }

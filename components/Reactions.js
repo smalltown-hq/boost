@@ -69,7 +69,6 @@ export default function Reactions(props) {
                   className="emoji__container"
                   onTap={() => setTapped(key)}
                   animate={afterTap(key)}
-                  whileHover={tapped !== key && variants.bounce}
                   onAnimationComplete={() => setTapped()}
                 >
                   <Emoji />
@@ -93,6 +92,7 @@ export default function Reactions(props) {
           border-radius: 50%;
           height: 56px;
           width: 56px;
+          cursor: pointer;
         }
 
         .reaction {

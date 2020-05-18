@@ -198,7 +198,7 @@ export default function Header(props) {
               variants={{
                 closed: {
                   opacity: 0,
-                  y: -50,
+                  y: "100%",
                 },
                 open: {
                   opacity: 1,
@@ -207,11 +207,6 @@ export default function Header(props) {
               }}
             >
               <div className="snack__content">
-                Depoly this site in one click with{" "}
-                <a href="https://vercel.com" style={{ marginLeft: "0.25rem" }}>
-                  Vercel
-                </a>
-                !
                 <a
                   href="https://vercel.com/import/project?template=https://github.com/flawk-community/boost"
                   onClick={DeployService.log}
@@ -219,6 +214,16 @@ export default function Header(props) {
                 >
                   <VercelDeploy className="deploy-button" />
                 </a>
+                <span>
+                  Depoly this site in one click with{" "}
+                  <a
+                    href="https://vercel.com"
+                    style={{ marginLeft: "0.25rem" }}
+                  >
+                    Vercel
+                  </a>
+                  !
+                </span>
               </div>
               <div
                 className="snack__dismiss"
@@ -242,12 +247,14 @@ export default function Header(props) {
         .snack__dismiss,
         .snack__content {
           display: flex;
+          flex-direction: column;
           align-items: center;
         }
 
         .snack__dismiss {
           position: absolute;
-          right: 1rem;
+          right: 0.5rem;
+          top: 0.5rem;
           cursor: pointer;
         }
 
@@ -256,8 +263,8 @@ export default function Header(props) {
         }
 
         :global(.deploy-snack) {
-          position: absolute;
-          top: 100%;
+          position: fixed;
+          bottom: 0;
           left: 0;
           z-index: 100;
           width: 100vw;
@@ -320,6 +327,7 @@ export default function Header(props) {
         }
 
         .header {
+          position: relative;
           width: 100vw;
           padding: 0.75rem;
           display: flex;
@@ -334,7 +342,7 @@ export default function Header(props) {
           width: 75px;
         }
 
-        .action-container__always :global(button) {
+        .action-container__always :global(.button-wrapper > .button) {
           min-width: 75px;
           font-size: 0.75rem;
         }
@@ -361,7 +369,7 @@ export default function Header(props) {
             width: initial;
           }
 
-          .action-container__always :global(button) {
+          .action-container__always :global(.button-wrapper > .button) {
             min-width: initial;
             font-size: 1rem;
           }

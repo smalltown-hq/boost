@@ -12,31 +12,49 @@ import Watch from "vectors/buttons/Watch";
 import Read from "vectors/buttons/Read";
 import useAuth from "hooks/useAuth";
 import DeployService from "services/deploy";
-import ApiService from "services/api";
+import DataService from "services/data";
 
 export default function Home(props) {
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
-        <script>{`
-          if (document.cookie && document.cookie.indexOf('_bid') > -1) {
-            if (document.location.pathname !== '/home') {
-              window.location.href = "/dashboard";
+        <script>
+          {`
+            if (document.cookie && document.cookie.indexOf('token') > -1) {
+              if (document.location.pathname !== '/home') {
+                window.location.href = "/dashboard";
+              }
             }
-          }
-        `}</script>
+          `}
+        </script>
         <title>Boost | online event engagement</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="theme-color" content="var(--primary)" />
-        <meta name="twitter:site" content="@getboostapp" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="og:title" content="Boost | online event engagement" />
-        <link rel="shortcut icon" href="/favicon.png" />
-        <meta name="og:url" content="https://getboost.app" />
-        <meta name="description" content="" />
-        <meta name="og:description" content="" />
-        <meta name="og:image" content="https://getboost.app/social.png" />
+        <meta
+          key="viewport"
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
+        />
+        <meta key="theme-color" name="theme-color" content="var(--primary)" />
+        <meta name="twitter:site" key="twitter:site" content="@getboostapp" />
+        <meta
+          name="twitter:card"
+          key="twitter:card"
+          content="summary_large_image"
+        />
+        <meta
+          name="og:title"
+          key="og:title"
+          content="Boost | online event engagement"
+        />
+        <link key="favicon" rel="shortcut icon" href="/favicon.png" />
+        <meta name="og:url" key="og:url" content="https://getboost.app" />
+        <meta name="description" key="description" content="" />
+        <meta name="og:description" key="og:description" content="" />
+        <meta
+          name="og:image"
+          key="og:image"
+          content="https://getboost.app/social.png"
+        />
       </Head>
       <section className="hero">
         <div className="hero__content">
@@ -44,7 +62,7 @@ export default function Home(props) {
             Boost participation for your online events.
           </h1>
           <Link href="/how">
-            <Button className="hero__cta">Learn how</Button>
+            <Button>Learn how</Button>
           </Link>
         </div>
         <HomeIcon className="hero__icon" />
@@ -231,7 +249,7 @@ export default function Home(props) {
           padding-bottom: 4rem;
         }
 
-        .hero__content > :global(button) {
+        .hero__content :global(.button) {
           padding: 1rem 2rem;
           font-size: 1.25rem;
         }

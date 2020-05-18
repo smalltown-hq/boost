@@ -12,12 +12,13 @@ import Field from "components/Field";
 import Textarea from "components/Textarea";
 import Button from "components/Button";
 import QuestionPlaceholder from "components/QuestionPlaceholder";
-import ApiService from "services/api";
+import DataService from "services/data";
 import id from "utils/id";
 import ThumbUp from "vectors/emoji/ThumbUp";
+import ApiService from "services/api";
 
 function fetcher(route) {
-  return fetch(route).then((r) => (r.ok ? r.json() : {}));
+  return ApiService.get(route).then((r) => (r.ok ? r.json() : {}));
 }
 
 const QuestionAndResponseSchema = Yup.object().shape({
@@ -63,14 +64,14 @@ export default function Question(props) {
     votes[votes.has(uniqueId) ? "delete" : "add"](uniqueId);
 
     mutateQuestion(
-      {
+      (question) => ({
         ...question,
         votes: Array.from(votes),
-      },
+      }),
       false
     );
 
-    const voteRequest = await fetch(
+    const voteRequest = await ApiService.get(
       `/api/questions/${props.questionId}/vote?voter=${uniqueId}`
     );
 
@@ -81,7 +82,7 @@ export default function Question(props) {
 
   const handleSubmit = async (values, formikContext) => {
     mutateQuestion(
-      {
+      (question) => ({
         ...question,
         comments: [
           ...question.comments,
@@ -91,15 +92,14 @@ export default function Question(props) {
             content: values.content,
           },
         ],
-      },
+      }),
       false
     );
 
     // TODO: Maybe make this forced authorized
-    const commentRequest = await fetch(
+    const commentRequest = await ApiService.post(
       `/api/questions/${props.questionId}/comment`,
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -110,11 +110,21 @@ export default function Question(props) {
     if (commentRequest.ok) {
       formikContext.resetForm();
       mutateQuestion(commentRequest.json());
+      formikContext.setErrors({
+        general: { content: "Comment posted!" },
+      });
+
+      setTimeout(() => {
+        formikContext.setErrors({});
+      }, 1500);
     } else {
-      formikContext.setFieldError(
-        "content",
-        (await commentRequest.text()) || "An unexpected error ocurred."
-      );
+      formikContext.setErrors({
+        general: {
+          content:
+            (await commentRequest.text()) || "An unexpected error ocurred.",
+          color: "var(--error)",
+        },
+      });
     }
   };
 
@@ -213,6 +223,7 @@ export default function Question(props) {
                         <Form>
                           <Field error={touched.content && errors.content}>
                             <Textarea
+                              disabled={isSubmitting}
                               {...getFieldProps("content")}
                               style={{ minHeight: 125 }}
                               placeholder="Write a comment..."
@@ -223,6 +234,17 @@ export default function Question(props) {
                               type="submit"
                               disabled={!isValid}
                               loading={isSubmitting}
+                              status={
+                                <span
+                                  style={{
+                                    color:
+                                      errors.general?.color || "var(--success)",
+                                  }}
+                                >
+                                  {errors.general?.content}
+                                </span>
+                              }
+                              reverse
                             >
                               Comment
                             </Button>

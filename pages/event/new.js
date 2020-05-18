@@ -18,8 +18,7 @@ export default function NewEvent() {
   const user = useAuth({ redirectTo: "/login" });
 
   const handleSubmit = async (values, formikContext) => {
-    const eventCreateRequest = await fetch("/api/events/create", {
-      method: "POST",
+    const eventCreateRequest = await ApiService.post("/api/events/create", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -27,7 +26,8 @@ export default function NewEvent() {
     });
 
     if (eventCreateRequest.ok) {
-      Router.push(`/event/${await eventCreateRequest.text()}`);
+      formikContext.resetForm();
+      await Router.push(`/event/${await eventCreateRequest.text()}`);
     } else {
       formikContext.setFieldError({
         name:

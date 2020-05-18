@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 import CookieService from "services/cookie";
+import ApiService from "services/api";
 
 function fetcher(route) {
-  return fetch(route)
+  return ApiService.get(route)
     .then((r) => r.ok && r.json())
     .then((user) => user || null);
 }
@@ -27,6 +28,7 @@ export default function useAuth({ redirectTo } = {}) {
     user.logout = () => {
       CookieService.removeAuthCookie();
       mutate();
+      Router.push("/");
     };
   }
 

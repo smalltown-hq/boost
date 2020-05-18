@@ -5,9 +5,10 @@ import Head from "next/head";
 import useAuth from "hooks/useAuth";
 import Button from "components/Button";
 import Right from "vectors/Right";
+import ApiService from "services/api";
 
 async function fetcher(route) {
-  const eventsRequest = await fetch(route);
+  const eventsRequest = await ApiService.get(route);
 
   if (eventsRequest.ok) {
     return eventsRequest.json();
@@ -71,7 +72,7 @@ export default function Dashboard() {
     <>
       <Head>
         <script>{`
-          if (document.cookie && document.cookie.indexOf("_bid") === -1) {
+          if (document.cookie && document.cookie.indexOf("token") === -1) {
             window.location.href = "/";
           }
         `}</script>

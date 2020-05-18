@@ -1,8 +1,8 @@
 import { serialize, parse } from "cookie";
 import ms from "ms";
 
-// _BoostId
-const NAME = "_bid";
+const TOKEN_NAME = "token";
+const MAX_AGE = 60 * 60 * 8;
 
 function removeAuthCookie() {
   if (!process.browser) {
@@ -17,19 +17,23 @@ function removeAuthCookie() {
   return true;
 }
 
-function createCookie(data, options = {}) {
-  return serialize(NAME, data, {
-    maxAge: ms("12h") / 1000,
-    expires: new Date(Date.now() + ms("12h")),
+function createCookie(token, options = {}) {
+  return serialize(TOKEN_NAME, token, {
+    maxAge: MAX_AGE,
+    expires: new Date(Date.now() + MAX_AGE * 1000),
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    sameSite: "lax",
+    sameSite: "strict",
     ...options,
   });
 }
 
-function getAuthToken(cookies) {
-  return cookies[NAME];
+function setTokenCookie(res, token) {
+  res.setHeader("Set-Cookie", createCookie(token));
 }
 
-export default { createCookie, getAuthToken, removeAuthCookie };
+function getAuthToken(req) {
+  return req.cookies[TOKEN_NAME];
+}
+
+export default { setTokenCookie, removeAuthCookie, getAuthToken, createCookie };

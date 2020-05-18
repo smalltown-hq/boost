@@ -1,14 +1,12 @@
 import CookieService from "services/cookie";
-import ApiService from "services/api";
+import DataService from "services/data";
 
 export default async (req, res) => {
-  const request = await ApiService.fetch(
+  const request = await DataService.fetch(
     `/questions/${req.query.id}/vote?voter=${req.query.voter}`,
     {
       headers: {
-        Cookie: CookieService.createCookie(
-          CookieService.getAuthToken(req.cookies)
-        ),
+        Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
       },
     }
   );

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import Head from "next/head";
 import Router from "next/router";
 import HomeIcon from "vectors/HomeIcon";
 import Curve from "vectors/Curve";
@@ -10,6 +11,7 @@ import Field from "components/Field";
 import Button from "components/Button";
 import useAuth from "hooks/useAuth";
 import MagicClientService from "services/magic-client";
+import ApiService from "services/api";
 
 const SignInUpSchema = Yup.object({
   email: Yup.string()
@@ -33,14 +35,6 @@ export default function Login() {
     });
   }, []);
 
-  // check to see if we already have a user
-  // if we do, no need to auth again
-  useEffect(() => {
-    if (user) {
-      Router.push("/");
-    }
-  }, [user]);
-
   const handleSubmit = async (values, formikContext) => {
     if (!isMagicLinkReady) return;
 
@@ -59,8 +53,7 @@ export default function Login() {
     // login to our system and persist your user account
     // which is just an email. We also encrypt and set
     // a cookie here that can be used for in later requests
-    const authRequest = await fetch("/api/login", {
-      method: "POST",
+    const authRequest = await ApiService.post("/api/login", {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${did}`,
@@ -69,8 +62,10 @@ export default function Login() {
     });
 
     if (authRequest.ok) {
-      // Logging into our API using Magic Link was successful!
-      Router.push(localStorage.getItem("_bRedirectTo") || "/");
+      const redirectTo = localStorage.getItem("_bRedirectTo") || "/dashboard";
+      localStorage.removeItem("_bRedirectTo");
+
+      Router.push(redirectTo);
     } else {
       formikContext.setFieldError({ email: await authRequest.text() });
     }
@@ -78,6 +73,15 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <script>
+          {`
+            if (document.cookie && document.cookie.indexOf('token') > -1) {
+              window.location.href = "/";
+            }
+          `}
+        </script>
+      </Head>
       <section className="main">
         <div className="main__content">
           <h1 className="main__title">Welcome!</h1>
