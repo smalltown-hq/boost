@@ -20,7 +20,8 @@ const SignInUpSchema = Yup.object({
 });
 
 export default function Login() {
-  const user = useAuth();
+  const { user } = useAuth();
+  const [showDialog, setShowDialog] = useState(false);
   // Magic link needs to load an iFrame, we block in UI
   // until that frame is loaded
   const [isMagicLinkReady, setIsMagicLinkReady] = useState(false);
@@ -46,6 +47,8 @@ export default function Login() {
     // get decentralized id token from magic link which we can use
     // to authorize requests
     const { did, error } = await MagicClientService.login(values.email);
+
+    setShowDialog(true);
 
     if (error) {
       formikContext.setFieldError("email", error);

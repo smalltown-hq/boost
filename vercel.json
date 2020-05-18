@@ -6,5 +6,6 @@
     "env": {
       "MAGIC_PUB_KEY": "@boost-magic-link-pkey"
     }
-  }
+  },
+  "routes": [{ "src": "/home", "dest": "/" }]
 }

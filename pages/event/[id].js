@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -23,13 +24,12 @@ const QuestionAndResponseSchema = Yup.object().shape({
   content: Yup.string().required("You'll have to write something..."),
 });
 
+const PAGE = 5;
+
 export default function Event(props) {
   const { isFallback, query } = useRouter();
-  const [isSnackOpen, setSnackOpen] = useState(
-    process.browser
-      ? !Boolean(+localStorage.getItem(`copy-snack-${query.id}`))
-      : true
-  );
+  const [isSnackOpen, setSnackOpen] = useState(false);
+  const [loadedQuestions, setLoadedQuestions] = useState([]);
   const { data: event, error, mutate: mutateEvent } = useSWR(
     () => {
       if (isFallback) {
@@ -45,10 +45,10 @@ export default function Event(props) {
   );
 
   useEffect(() => {
-    if (!isSnackOpen && process.browser) {
-      localStorage.setItem(`copy-snack-${query.id}`, 1);
+    if (event.questions && loadedQuestions.length < 1) {
+      setLoadedQuestions(event.questions.slice(0, PAGE));
     }
-  }, [isSnackOpen]);
+  }, [event]);
 
   useEffect(() => {
     fetch(`/api/events/${query.id}/join`).then(
@@ -59,10 +59,24 @@ export default function Event(props) {
       fetch(`/api/events/${query.id}/leave`)
     );
 
+    const snack = localStorage.getItem(`copy-snack-${query.id}`);
+
+    if (snack === null) {
+      setTimeout(() => setSnackOpen(true), 3000);
+    }
+
     return () => fetch(`/api/events/${query.id}/leave`);
   }, [query.id]);
 
   const handleQuestionSubmit = async (values, formikContext) => {
+    mutateEvent(
+      {
+        ...event,
+        questions: [...event.questions, "temp"],
+      },
+      false
+    );
+
     const questionRequest = await fetch(
       `/api/questions/create?event=${query.id}`,
       {
@@ -76,21 +90,31 @@ export default function Event(props) {
 
     if (questionRequest.ok) {
       formikContext.resetForm();
-      mutateEvent(questionRequest.json());
+      const updatedEvent = await questionRequest.json();
+
+      setLoadedQuestions([
+        ...loadedQuestions,
+        updatedEvent.questions[updatedEvent.questions.length - 1],
+      ]);
+
+      mutateEvent(updatedEvent);
     }
   };
 
   const handleReaction = async (reaction) => {
-    mutateEvent({
-      ...event,
-      reactions: {
-        ...event.reactions,
-        [reaction]:
-          (event.reactions && event.reactions[reaction]
-            ? event.reactions[reaction]
-            : 0) + 1,
+    mutateEvent(
+      {
+        ...event,
+        reactions: {
+          ...event.reactions,
+          [reaction]:
+            (event.reactions && event.reactions[reaction]
+              ? event.reactions[reaction]
+              : 0) + 1,
+        },
       },
-    });
+      false
+    );
 
     const reactionRequest = await fetch(
       `/api/events/${query.id}/react?reaction=${reaction}`
@@ -105,32 +129,21 @@ export default function Event(props) {
     await navigator.clipboard?.writeText(
       `https://getboost.app/event/${query.id}`
     );
+    localStorage.setItem(`copy-snack-${query.id}`, +true);
     setSnackOpen(false);
+  };
+
+  const handleLoadMore = () => {
+    const currentLength = loadedQuestions.length;
+
+    setLoadedQuestions([
+      ...loadedQuestions,
+      ...event.questions.slice(currentLength, currentLength + PAGE),
+    ]);
   };
 
   return (
     <>
-      {isSnackOpen && (
-        <div className="snack">
-          Click{" "}
-          <strong
-            onClick={copy}
-            style={{
-              cursor: "pointer",
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "0 0.25rem",
-            }}
-          >
-            here <Copy />
-          </strong>{" "}
-          to copy and share the link with your community!
-          <Close
-            style={{ margin: "0 1rem", cursor: "pointer" }}
-            onClick={() => setSnackOpen(false)}
-          />
-        </div>
-      )}
       <section className={`event ${isFallback ? "event--fallback" : ""}`}>
         <div className="event__container">
           <div className="event__title-group">
@@ -138,7 +151,7 @@ export default function Event(props) {
             <p className="event__view-count">
               {event.liveViewers < 2
                 ? "You are the only one here!"
-                : `${event.liveViewers} people are here with you`}
+                : `${event.liveViewers - 1} people are here with you`}
             </p>
           </div>
           <div className="event__reactions">
@@ -185,33 +198,103 @@ export default function Event(props) {
             </Formik>
           </div>
           <div className="event__questions-list">
-            <p className="reactions__title">Questions</p>
+            <p className="reactions__title">
+              {event?.questions?.length > 1 && event?.questions?.length}{" "}
+              Questions
+            </p>
             {isFallback && <QuestionPlaceholder />}
             {!isFallback &&
               event.questions?.length < 1 &&
               "Be the first one to ask a question!"}
             {!isFallback &&
-              event.questions?.length >= 1 &&
-              event.questions.map((questionId) => {
+              loadedQuestions?.length >= 1 &&
+              loadedQuestions.map((questionId) => {
                 return (
                   <div className="question__wrapper" key={questionId}>
                     <Question questionId={questionId} />
                   </div>
                 );
               })}
+            {loadedQuestions.length !== event.questions?.length && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "center",
+                }}
+              >
+                <Button onClick={handleLoadMore}>Load more</Button>
+              </div>
+            )}
           </div>
         </div>
       </section>
+      <AnimatePresence>
+        {isSnackOpen && (
+          <motion.div
+            exit="closed"
+            animate="open"
+            initial="closed"
+            variants={{
+              closed: {
+                x: "-100%",
+                opacity: 0,
+              },
+              open: {
+                x: 0,
+                opacity: 1,
+              },
+            }}
+            className="event-copy-snack"
+          >
+            Click{" "}
+            <strong
+              onClick={copy}
+              style={{
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "0 0.25rem",
+              }}
+            >
+              here <Copy />
+            </strong>{" "}
+            to copy and share the link with your community!
+            <Close
+              style={{
+                margin: "0 1rem",
+                cursor: "pointer",
+                position: "absolute",
+                top: "0.5rem",
+                right: "0rem",
+              }}
+              onClick={() => setSnackOpen(false)}
+            />
+            <Button
+              style={{ width: "100%", marginTop: "0.5rem" }}
+              onClick={copy}
+            >
+              Copy
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <style jsx>{`
-        .snack {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          width: 100vw;
+        :global(.event-copy-snack) {
+          position: fixed;
+          bottom: 1rem;
+          left: 1rem;
+          width: calc(100% - 2rem);
+          border-radius: var(--border-radius);
           background: var(--accent-1);
-          padding: 1rem;
-          text-align: center;
+          padding: 2rem 1rem 1rem 1rem;
+          box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+            0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+            0 12.5px 10px rgba(0, 0, 0, 0.035),
+            0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+            0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+            0 100px 80px rgba(0, 0, 0, 0.07);
         }
 
         .question__wrapper {
@@ -318,6 +401,12 @@ export default function Event(props) {
           justify-content: center;
           align-items: center;
           user-select: none;
+        }
+
+        @media screen and (min-width: 500px) {
+          :global(.event-copy-snack) {
+            width: 250px;
+          }
         }
       `}</style>
     </>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Formik, Form } from "formik";
+import Router from "next/router";
 import * as Yup from "yup";
 import useSWR from "swr";
 import prettyMs from "pretty-ms";
@@ -29,12 +30,22 @@ const commentVariants = {
 };
 
 export default function Question(props) {
-  const user = useAuth();
+  const { user } = useAuth();
   const [areCommentsOpen, setCommentsOpen] = useState(false);
   const { data: question, mutate: mutateQuestion } = useSWR(
     `/api/questions/${props.questionId}`,
     fetcher
   );
+
+  useEffect(() => {
+    if (props.questionId === "temp") {
+      document.getElementById(props.questionId)?.scrollIntoView({
+        behavior: "smooth",
+      });
+      console.log(Router);
+      // Router.replace(`/event/${}`, ``, false)
+    }
+  }, [props.questionId]);
 
   const loading = question === undefined;
 
@@ -51,10 +62,13 @@ export default function Question(props) {
 
     votes[votes.has(uniqueId) ? "delete" : "add"](uniqueId);
 
-    mutateQuestion({
-      ...question,
-      votes: Array.from(votes),
-    });
+    mutateQuestion(
+      {
+        ...question,
+        votes: Array.from(votes),
+      },
+      false
+    );
 
     const voteRequest = await fetch(
       `/api/questions/${props.questionId}/vote?voter=${uniqueId}`
@@ -66,17 +80,20 @@ export default function Question(props) {
   };
 
   const handleSubmit = async (values, formikContext) => {
-    mutateQuestion({
-      ...question,
-      comments: [
-        ...question.comments,
-        {
-          _id: id(),
-          createdAt: Date.now(),
-          content: values.content,
-        },
-      ],
-    });
+    mutateQuestion(
+      {
+        ...question,
+        comments: [
+          ...question.comments,
+          {
+            _id: id(),
+            createdAt: Date.now(),
+            content: values.content,
+          },
+        ],
+      },
+      false
+    );
 
     // TODO: Maybe make this forced authorized
     const commentRequest = await fetch(
@@ -102,12 +119,12 @@ export default function Question(props) {
   };
 
   if (loading) {
-    return <QuestionPlaceholder />;
+    return <QuestionPlaceholder id={props.questionId} />;
   }
 
   return (
     <>
-      <div className="question">
+      <div className="question" id={props.questionId}>
         <div className="question__time">
           Asked{" "}
           {!loading &&

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import useSWR from "swr";
 import Link from "next/link";
 import Button from "components/Button";
@@ -13,70 +14,30 @@ import useAuth from "hooks/useAuth";
 import DeployService from "services/deploy";
 import ApiService from "services/api";
 
-async function fetcher(route) {
-  const eventsRequest = await fetch(route);
-
-  if (eventsRequest.ok) {
-    return eventsRequest.json();
-  }
-
-  return [];
-}
-
 export default function Home(props) {
-  const user = useAuth();
-  const { data: events } = useSWR(() => {
-    if (!user) {
-      throw new Error("Cannot get events without user.");
-    }
-
-    return `/api/events/list?user=${user._id}`;
-  }, fetcher);
-
   return (
     <>
-      {user && (
-        <section className="user">
-          <p style={{ paddingBottom: "1rem", width: "100%" }}>
-            <strong>Your events</strong>
-          </p>
-          {events?.length > 0 ? (
-            <div className="events">
-              {events.map((event) => {
-                return (
-                  <Link href={`/event/${event._id}`}>
-                    <div className="event">
-                      <div className="event__title">{event.name}</div>
-                      <div className="event__stats">
-                        <div className="stat">
-                          <strong>
-                            {Object.values(event.reactions || {}).reduce(
-                              (sum, count) => sum + count,
-                              0
-                            )}
-                          </strong>{" "}
-                          Reactions
-                        </div>
-                        <div className="stat">
-                          <strong>{event.questions.length}</strong> Questions
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-              <div className="event event--empty" />
-            </div>
-          ) : (
-            <>
-              <p className="user__empty-text">You've never boosted an event!</p>
-              <Link href="/event/new">
-                <Button>Boost an event</Button>
-              </Link>
-            </>
-          )}
-        </section>
-      )}
+      <Head>
+        <meta charSet="utf-8" />
+        <script>{`
+          if (document.cookie && document.cookie.indexOf('_bid') > -1) {
+            if (document.location.pathname !== '/home') {
+              window.location.href = "/dashboard";
+            }
+          }
+        `}</script>
+        <title>Boost | online event engagement</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="theme-color" content="var(--primary)" />
+        <meta name="twitter:site" content="@getboostapp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="og:title" content="Boost | online event engagement" />
+        <link rel="shortcut icon" href="/favicon.png" />
+        <meta name="og:url" content="https://getboost.app" />
+        <meta name="description" content="" />
+        <meta name="og:description" content="" />
+        <meta name="og:image" content="https://getboost.app/social.png" />
+      </Head>
       <section className="hero">
         <div className="hero__content">
           <h1 className="hero__title">

@@ -1,10 +1,10 @@
 import React from "react";
 import ThumbUp from "vectors/emoji/ThumbUp";
 
-export default function QuestionPlaceholder() {
+export default function QuestionPlaceholder(props) {
   return (
     <>
-      <div className="question">
+      <div className="question" id={props.id}>
         <div className="question__time" />
         <div className="question__content">
           <div className="placeholder" />

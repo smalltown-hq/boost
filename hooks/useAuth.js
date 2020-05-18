@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
-import ApiService from "services/api";
+import CookieService from "services/cookie";
 
 function fetcher(route) {
   return fetch(route)
@@ -10,7 +10,7 @@ function fetcher(route) {
 }
 
 export default function useAuth({ redirectTo } = {}) {
-  const { data: user, error } = useSWR("/api/user", fetcher);
+  const { data: user, error, mutate } = useSWR("/api/user", fetcher);
   const loading = user === undefined;
 
   // handle redirections
@@ -23,5 +23,16 @@ export default function useAuth({ redirectTo } = {}) {
     }
   }, [redirectTo, user, loading]);
 
-  return error ? null : user;
+  if (user) {
+    user.logout = () => {
+      CookieService.removeAuthCookie();
+      mutate();
+    };
+  }
+
+  return {
+    user,
+    loading,
+    error,
+  };
 }

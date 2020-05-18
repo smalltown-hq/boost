@@ -144,7 +144,7 @@ export default function Reactions(props) {
           justify-content: space-evenly;
         }
 
-        @media screen and (min-width: 500px) {
+        @media screen and (min-width: 600px) {
           .reactions {
             flex-wrap: nowrap;
             justify-content: space-between;

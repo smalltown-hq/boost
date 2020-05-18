@@ -12,13 +12,13 @@ export default forwardRef(function Button({ loading, ...props }, ref) {
       </button>
       <style jsx>{`
         border: none;
-        background: var(--primary);
+        background: ${props.secondary ? "var(--background)" : "var(--primary)"};
         color: var(--foreground);
         font-weight: bold;
         font-size: 1rem;
         border-radius: var(--border-radius);
         padding: 0.75rem 1.25rem;
-        min-width: 150px;
+        min-width: ${props.secondary ? 100 : 150}px;
         will-change: width;
         transition: width 0.2s ease;
 

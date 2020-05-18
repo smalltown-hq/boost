@@ -3,7 +3,7 @@ import ApiService from "services/api";
 
 export default async (req, res) => {
   const request = await ApiService.fetch(
-    `/events/list?user=${req.query.user}`,
+    `/events/list?page=${req.query.page || 0}`,
     {
       headers: {
         Cookie: CookieService.createCookie(
