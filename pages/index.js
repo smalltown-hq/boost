@@ -19,15 +19,17 @@ export default function Home(props) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <script async>
-          {`
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             if (document.cookie && document.cookie.indexOf('authed') > -1) {
               if (document.location.pathname !== '/home') {
                 window.location.href = "/dashboard";
               }
             }
-          `}
-        </script>
+          `,
+          }}
+        />
         <title>Boost | online event engagement</title>
         <meta
           key="viewport"

@@ -64,13 +64,15 @@ export default function Login() {
   return (
     <>
       <Head>
-        <script async>
-          {`
-            if (document.cookie && document.cookie.indexOf('authed') > -1) {
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            if (document.cookie && document.cookie.indexOf("authed") > -1) {
               window.location.href = "/";
             }
-          `}
-        </script>
+          `,
+          }}
+        />
       </Head>
       <section className="main">
         <div className="main__content">

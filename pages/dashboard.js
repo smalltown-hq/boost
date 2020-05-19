@@ -71,11 +71,15 @@ export default function Dashboard() {
   return (
     <>
       <Head>
-        <script async>{`
-          if (document.cookie && document.cookie.indexOf("authed") === -1) {
-            window.location.href = "/";
-          }
-        `}</script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            if (document.cookie && document.cookie.indexOf("authed") === -1) {
+              window.location.href = "/login";
+            }
+          `,
+          }}
+        />
       </Head>
       <section className="events-list">
         <h1 className="events-list__title">Your events</h1>

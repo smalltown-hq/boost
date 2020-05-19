@@ -40,11 +40,15 @@ export default function NewEvent() {
   return (
     <>
       <Head>
-        <script async>{`
-          if (document.cookie && document.cookie.indexOf("authed") === -1) {
-            window.location.href = "/";
-          }
-        `}</script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            if (document.cookie && document.cookie.indexOf("authed") === -1) {
+              window.location.href = "/login";
+            }
+          `,
+          }}
+        />
       </Head>
       <section className="main">
         <div className="main__content">
