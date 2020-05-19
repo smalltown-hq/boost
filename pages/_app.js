@@ -12,7 +12,7 @@ export default function BoostApp({ pageProps, Component }) {
             font-family: "Poppins";
             font-style: normal;
             font-weight: 300;
-            font-display: optional;
+            font-display: fallback;
             src: local("Poppins Light"), local("Poppins-Light"),
               url(https://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLDz8Z1xlFd2JQEk.woff2)
                 format("woff2");
@@ -24,7 +24,7 @@ export default function BoostApp({ pageProps, Component }) {
             font-family: "Poppins";
             font-style: normal;
             font-weight: 500;
-            font-display: optional;
+            font-display: fallback;
             src: local("Poppins Medium"), local("Poppins-Medium"),
               url(https://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2)
                 format("woff2");
@@ -36,7 +36,7 @@ export default function BoostApp({ pageProps, Component }) {
             font-family: "Poppins";
             font-style: normal;
             font-weight: 700;
-            font-display: optional;
+            font-display: fallback;
             src: local("Poppins Bold"), local("Poppins-Bold"),
               url(https://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2)
                 format("woff2");

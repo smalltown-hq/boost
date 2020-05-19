@@ -48,8 +48,16 @@ export default function Home(props) {
         />
         <link key="favicon" rel="shortcut icon" href="/favicon.png" />
         <meta name="og:url" key="og:url" content="https://getboost.app" />
-        <meta name="description" key="description" content="" />
-        <meta name="og:description" key="og:description" content="" />
+        <meta
+          name="description"
+          key="description"
+          content="Add simple Q&A threads and reactions to any event."
+        />
+        <meta
+          name="og:description"
+          key="og:description"
+          content="Add simple Q&A threads and reactions to any event."
+        />
         <meta
           name="og:image"
           key="og:image"

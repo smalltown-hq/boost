@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import useSWR from "swr";
@@ -171,6 +172,19 @@ export default function Event(props) {
 
   return (
     <>
+      <Head>
+        <title>{`Boosted ${event?.name || ""}`}</title>
+        <meta
+          name="og:title"
+          key="og:title"
+          content={`Boosted ${event?.name || ""}`}
+        />
+        <meta
+          name="og:url"
+          key="og:url"
+          content={`https://getboost.app/event/${query.id}`}
+        />
+      </Head>
       <section className={`event ${isFallback ? "event--fallback" : ""}`}>
         <div className="event__container">
           <div className="event__title-group">
