@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Formik, Form } from "formik";
 import Router from "next/router";
@@ -37,16 +37,6 @@ export default function Question(props) {
     `/api/questions/${props.questionId}`,
     fetcher
   );
-
-  useEffect(() => {
-    if (props.questionId === "temp") {
-      document.getElementById(props.questionId)?.scrollIntoView({
-        behavior: "smooth",
-      });
-      console.log(Router);
-      // Router.replace(`/event/${}`, ``, false)
-    }
-  }, [props.questionId]);
 
   const loading = question === undefined;
 
@@ -96,7 +86,6 @@ export default function Question(props) {
       false
     );
 
-    // TODO: Maybe make this forced authorized
     const commentRequest = await ApiService.post(
       `/api/questions/${props.questionId}/comment`,
       {

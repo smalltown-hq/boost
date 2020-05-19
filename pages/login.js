@@ -24,19 +24,9 @@ const SignInUpSchema = Yup.object({
 export default function Login() {
   const { user } = useAuth();
   const [showDialog, setShowDialog] = useState(false);
-  // Magic link needs to load an iFrame, we block in UI
-  // until that frame is loaded
-  const [isMagicLinkReady, setIsMagicLinkReady] = useState(false);
-
-  useEffect(() => {
-    // On mount of the component, preload the magic link iframe
-    MagicClientService.preload().then(() => {
-      setIsMagicLinkReady(true);
-    });
-  }, []);
 
   const handleSubmit = async (values, formikContext) => {
-    if (!isMagicLinkReady) return;
+    await MagicClientService.preload();
 
     // get decentralized id token from magic link which we can use
     // to authorize requests
@@ -102,7 +92,7 @@ export default function Login() {
                 </Field>
                 <Button
                   type="submit"
-                  loading={isSubmitting || !isMagicLinkReady}
+                  loading={isSubmitting}
                   disabled={!isValid}
                 >
                   Log in <span style={{ fontWeight: "normal" }}>or</span> Sign

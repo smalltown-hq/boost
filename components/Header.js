@@ -231,7 +231,7 @@ export default function Header(props) {
                   <VercelDeploy className="deploy-button" />
                 </a>
                 <span>
-                  Depoly this site in one click with{" "}
+                  Deploy this site in one click with{" "}
                   <a
                     href="https://vercel.com"
                     style={{ marginLeft: "0.25rem" }}

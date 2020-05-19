@@ -35,7 +35,7 @@ export default function Home(props) {
           content="initial-scale=1.0, width=device-width"
         />
         <meta key="theme-color" name="theme-color" content="var(--primary)" />
-        <meta name="twitter:site" key="twitter:site" content="@getboostapp" />
+        <meta name="twitter:site" key="twitter:site" content="@zealigan" />
         <meta
           name="twitter:card"
           key="twitter:card"

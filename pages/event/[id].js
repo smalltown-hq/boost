@@ -27,6 +27,7 @@ const QuestionAndResponseSchema = Yup.object().shape({
   content: Yup.string().required("You'll have to write something..."),
 });
 
+// Number of questions per "page"
 const PAGE = 5;
 
 export default function Event(props) {
@@ -453,8 +454,6 @@ export default function Event(props) {
 }
 
 export async function getStaticProps({ params }) {
-  // This is only run in node environemnt so we can call the
-  // DataService directly
   const event = serialize(
     await DataService.fetch(`/events/${params.id}`).then(
       (r) => r.ok && r.json()

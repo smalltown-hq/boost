@@ -19,7 +19,7 @@ export default function Input(props) {
         font-size: 1rem;
         padding: 0.25rem;
         min-height: 200px;
-        font-family: var(--font);
+        font-family: var(--font), sans-serif;
       `}</style>
     </>
   );
