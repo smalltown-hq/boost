@@ -74,9 +74,9 @@ export default function Login() {
   return (
     <>
       <Head>
-        <script>
+        <script async>
           {`
-            if (document.cookie && document.cookie.indexOf('token') > -1) {
+            if (document.cookie && document.cookie.indexOf('authed') > -1) {
               window.location.href = "/";
             }
           `}

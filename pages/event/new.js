@@ -1,5 +1,6 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import Head from "next/head";
 import Router from "next/router";
 import Input from "components/Input";
 import Label from "components/Label";
@@ -38,6 +39,13 @@ export default function NewEvent() {
 
   return (
     <>
+      <Head>
+        <script async>{`
+          if (document.cookie && document.cookie.indexOf("authed") === -1) {
+            window.location.href = "/";
+          }
+        `}</script>
+      </Head>
       <section className="main">
         <div className="main__content">
           <h1 className="main__title">Get your event link!</h1>

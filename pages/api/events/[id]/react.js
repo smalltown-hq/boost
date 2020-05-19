@@ -6,7 +6,10 @@ export default async (req, res) => {
     `/events/${req.query.id}/react?reaction=${req.query.reaction}`,
     {
       headers: {
-        Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
+        Cookie: CookieService.createCookie(
+          CookieService.AUTH_TOKEN_NAME,
+          CookieService.getAuthToken(req)
+        ),
       },
     }
   );

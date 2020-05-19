@@ -19,9 +19,9 @@ export default function Home(props) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <script>
+        <script async>
           {`
-            if (document.cookie && document.cookie.indexOf('token') > -1) {
+            if (document.cookie && document.cookie.indexOf('authed') > -1) {
               if (document.location.pathname !== '/home') {
                 window.location.href = "/dashboard";
               }

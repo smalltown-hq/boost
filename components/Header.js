@@ -24,6 +24,7 @@ export default function Header(props) {
   const { user, loading: loadingUser } = useAuth();
   const router = useRouter();
   const [showButtons, setShowButtons] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [snackClosed, setSnackClosed] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -84,7 +85,14 @@ export default function Header(props) {
                   <Link href="/event/new">
                     <Button>Create event</Button>
                   </Link>
-                  <Button onClick={() => user?.logout()} secondary>
+                  <Button
+                    loading={isLoggingOut}
+                    onClick={() => {
+                      setIsLoggingOut(true);
+                      user?.logout().then(() => setIsLoggingOut(false));
+                    }}
+                    secondary
+                  >
                     Logout
                   </Button>
                 </div>
@@ -129,7 +137,15 @@ export default function Header(props) {
                             </Link>
                           </div>
                           <div className="menu__group">
-                            <Button onClick={() => user?.logout()}>
+                            <Button
+                              loading={isLoggingOut}
+                              onClick={() => {
+                                setIsLoggingOut(true);
+                                user
+                                  ?.logout()
+                                  .then(() => setIsLoggingOut(false));
+                              }}
+                            >
                               Logout
                             </Button>
                           </div>

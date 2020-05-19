@@ -25,9 +25,8 @@ export default function useAuth({ redirectTo } = {}) {
   }, [redirectTo, user, loading]);
 
   if (user) {
-    user.logout = () => {
-      CookieService.removeAuthCookie();
-      mutate();
+    user.logout = async () => {
+      await mutate(ApiService.get("/api/logout"));
       Router.push("/");
     };
   }

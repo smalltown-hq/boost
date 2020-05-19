@@ -6,7 +6,10 @@ export default async (req, res) => {
     `/questions/${req.query.id}/vote?voter=${req.query.voter}`,
     {
       headers: {
-        Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
+        Cookie: CookieService.createCookie(
+          CookieService.AUTH_TOKEN_NAME,
+          CookieService.getAuthToken(req)
+        ),
       },
     }
   );

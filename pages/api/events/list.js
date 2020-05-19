@@ -6,7 +6,10 @@ export default async (req, res) => {
     `/events/list?page=${req.query.page || 0}`,
     {
       headers: {
-        Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
+        Cookie: CookieService.createCookie(
+          CookieService.AUTH_TOKEN_NAME,
+          CookieService.getAuthToken(req)
+        ),
       },
     }
   );

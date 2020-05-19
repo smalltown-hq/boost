@@ -4,7 +4,10 @@ import DataService from "services/data";
 export default async (req, res) => {
   const request = await DataService.fetch(`/events/${req.query.id}/leave`, {
     headers: {
-      Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
+      Cookie: CookieService.createCookie(
+        CookieService.AUTH_TOKEN_NAME,
+        CookieService.getAuthToken(req)
+      ),
     },
   });
 

@@ -6,7 +6,10 @@ export default async (req, res) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Cookie: CookieService.createCookie(CookieService.getAuthToken(req)),
+      Cookie: CookieService.createCookie(
+        CookieService.AUTH_TOKEN_NAME,
+        CookieService.getAuthToken(req)
+      ),
     },
     body: JSON.stringify(req.body),
   });
