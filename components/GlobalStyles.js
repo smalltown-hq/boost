@@ -47,6 +47,7 @@ export default function Styles() {
       a {
         font-weight: bold;
         display: inline-flex;
+        color: var(--foreground);
       }
 
       a:visited {
