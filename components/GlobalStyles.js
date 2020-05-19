@@ -13,7 +13,9 @@ export default function Styles() {
         --yellow: #f6e049;
         --error: #e0719e;
         --success: #3ab795;
-        --font: "Poppins";
+        --font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
         --border-radius: 4px;
       }
 
@@ -39,7 +41,7 @@ export default function Styles() {
         padding: 0;
         color: var(--foreground);
         box-sizing: border-box;
-        font-family: var(--font), "Helvetica", "Arial", sans-serif;
+        font-family: var(--font);
         background: var(--background);
         overflow-x: hidden;
       }
