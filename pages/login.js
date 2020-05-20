@@ -1,7 +1,7 @@
+import { Magic } from "magic-sdk";
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Head from "next/head";
 import Router from "next/router";
 import HomeIcon from "vectors/HomeIcon";
 import Curve from "vectors/Curve";
@@ -9,8 +9,8 @@ import Input from "components/Input";
 import Label from "components/Label";
 import Field from "components/Field";
 import Button from "components/Button";
+import Redirect from "components/Redirect";
 import useAuth from "hooks/useAuth";
-import MagicClientService from "services/magic-client";
 import ApiService from "services/api";
 
 const SignInUpSchema = Yup.object({
@@ -26,29 +26,19 @@ export default function Login() {
   const [showDialog, setShowDialog] = useState(false);
 
   const handleSubmit = async (values, formikContext) => {
-    await MagicClientService.preload();
-
     // get decentralized id token from magic link which we can use
     // to authorize requests
-    const { did, error } = await MagicClientService.login(values.email);
+    const did = await new Magic(
+      process.env.magicPublicKey
+    ).auth.loginWithMagicLink({ email: values.email });
 
     setShowDialog(true);
-
-    if (error) {
-      formikContext.setFieldError("email", error);
-
-      return;
-    }
 
     // login to our system and persist your user account
     // which is just an email. We also encrypt and set
     // a cookie here that can be used for in later requests
     const authRequest = await ApiService.post("/api/login", {
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${did}`,
-      },
-      body: JSON.stringify(values),
+      headers: { Authorization: `Bearer ${did}` },
     });
 
     if (authRequest.ok) {
@@ -63,17 +53,7 @@ export default function Login() {
 
   return (
     <>
-      <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (document.cookie && document.cookie.indexOf("authed") > -1) {
-              window.location.href = "/";
-            }
-          `,
-          }}
-        />
-      </Head>
+      <Redirect redirectOnUser redirectTo="/dashboard" />
       <section className="main">
         <div className="main__content">
           <h1 className="main__title">Welcome!</h1>

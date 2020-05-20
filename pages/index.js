@@ -2,6 +2,7 @@ import Head from "next/head";
 import useSWR from "swr";
 import Link from "next/link";
 import Button from "components/Button";
+import Redirect from "components/Redirect";
 import HomeIcon from "vectors/HomeIcon";
 import Curve from "vectors/Curve";
 import Reaction from "vectors/Reaction";
@@ -17,19 +18,9 @@ import DataService from "services/data";
 export default function Home(props) {
   return (
     <>
+      <Redirect redirectOnUser redirectTo="/dashboard" />
       <Head>
         <meta charSet="utf-8" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (document.cookie && document.cookie.indexOf('authed') > -1) {
-              if (document.location.pathname !== '/home') {
-                window.location.href = "/dashboard";
-              }
-            }
-          `,
-          }}
-        />
         <title>Boost | online event engagement</title>
         <meta
           key="viewport"

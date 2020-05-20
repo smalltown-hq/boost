@@ -1,11 +1,11 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Head from "next/head";
 import Router from "next/router";
 import Input from "components/Input";
 import Label from "components/Label";
 import Field from "components/Field";
 import Button from "components/Button";
+import Redirect from "components/Redirect";
 import useAuth from "hooks/useAuth";
 import HomeIcon from "vectors/HomeIcon";
 import Curve from "vectors/Curve";
@@ -39,17 +39,7 @@ export default function NewEvent() {
 
   return (
     <>
-      <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (document.cookie && document.cookie.indexOf("authed") === -1) {
-              window.location.href = "/login";
-            }
-          `,
-          }}
-        />
-      </Head>
+      <Redirect redirectTo="/login" />
       <section className="main">
         <div className="main__content">
           <h1 className="main__title">Get your event link!</h1>

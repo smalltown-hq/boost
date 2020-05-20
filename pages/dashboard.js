@@ -1,9 +1,9 @@
 import useSWR, { useSWRPages } from "swr";
 import Router from "next/router";
 import Link from "next/link";
-import Head from "next/head";
 import useAuth from "hooks/useAuth";
 import Button from "components/Button";
+import Redirect from "components/Redirect";
 import Right from "vectors/Right";
 import ApiService from "services/api";
 
@@ -70,17 +70,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (document.cookie && document.cookie.indexOf("authed") === -1) {
-              window.location.href = "/login";
-            }
-          `,
-          }}
-        />
-      </Head>
+      <Redirect redirectTo="/login" />
       <section className="events-list">
         <h1 className="events-list__title">Your events</h1>
         {!isEmpty ? (
