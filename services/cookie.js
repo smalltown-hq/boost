@@ -1,5 +1,4 @@
 import { serialize, parse } from "cookie";
-import ms from "ms";
 
 const TOKEN_NAME = "token";
 const MAX_AGE = 60 * 60 * 8;

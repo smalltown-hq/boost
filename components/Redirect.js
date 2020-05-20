@@ -22,6 +22,7 @@ export default function Redirect(props) {
       <style global jsx>{`
         body {
           display: ${typeof window !== "undefined" &&
+          props.redirectOnUser &&
           document.cookie.includes("authed") &&
           location.pathname !== "/home"
             ? "none"

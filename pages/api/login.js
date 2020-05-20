@@ -2,6 +2,8 @@ import DataService from "services/data";
 import CookieService from "services/cookie";
 
 export default async (req, res) => {
+  if (req.method !== "POST") return res.status(405).end();
+
   try {
     const tokenRequest = await DataService.fetch("/user/create", {
       method: "POST",
