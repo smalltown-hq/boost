@@ -71,7 +71,7 @@ export default function Event(props) {
 
   const handleQuestionSubmit = async (values, formikContext) => {
     mutateEvent(
-      (event) => ({
+      (event = { questions:[] }) => ({
         ...event,
         questions: [...event.questions, "temp"],
       }),
@@ -125,7 +125,7 @@ export default function Event(props) {
 
   const handleReaction = async (reaction) => {
     mutateEvent(
-      (event) => ({
+      (event = {}) => ({
         ...event,
         reactions: {
           ...event?.reactions,
