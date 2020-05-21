@@ -54,7 +54,7 @@ export default function Question(props) {
     votes[votes.has(uniqueId) ? "delete" : "add"](uniqueId);
 
     mutateQuestion(
-      (question) => ({
+      (question = {}) => ({
         ...question,
         votes: Array.from(votes),
       }),
@@ -72,7 +72,7 @@ export default function Question(props) {
 
   const handleSubmit = async (values, formikContext) => {
     mutateQuestion(
-      (question) => ({
+      (question = {}) => ({
         ...question,
         comments: [
           ...question.comments,

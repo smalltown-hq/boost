@@ -32,10 +32,10 @@ const QuestionAndResponseSchema = Yup.object().shape({
 const PAGE = 5;
 
 export default function Event(props) {
-  const { isFallback, query } = useRouter();
+  const { isFallback: isStaticRendering, query } = useRouter();
   const [isSnackOpen, setSnackOpen] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState([]);
-  const { data: event = {}, error, mutate: mutateEvent } = useSWR(
+  const { data: event, error, mutate: mutateEvent } = useSWR(
     () => {
       if (isFallback) {
         throw new Error();
@@ -47,8 +47,10 @@ export default function Event(props) {
     { event: props.event }
   );
 
+  const isFallback = isStaticRendering && !event;
+
   useEffect(() => {
-    if (event.questions && loadedQuestions.length < 1) {
+    if (event && event.questions && loadedQuestions.length < 1) {
       setLoadedQuestions(event.questions.slice(0, PAGE));
     }
   }, [event]);
@@ -186,11 +188,11 @@ export default function Event(props) {
       <section className={`event ${isFallback ? "event--fallback" : ""}`}>
         <div className="event__container">
           <div className="event__title-group">
-            <h1 className="event__title">Welcome to - {event.name}</h1>
+            <h1 className="event__title">Welcome to - {event?.name}</h1>
             <p className="event__view-count">
-              {event.liveViewers < 2
+              {event?.liveViewers < 2
                 ? "You are the only one here!"
-                : `${event.liveViewers - 1} people are here with you`}
+                : `${event?.liveViewers - 1} people are here with you`}
             </p>
           </div>
           <div className="event__reactions">
@@ -198,7 +200,7 @@ export default function Event(props) {
             <Reactions
               fallback={isFallback}
               onReaction={handleReaction}
-              reactions={event.reactions}
+              reactions={event?.reactions}
             />
           </div>
           <div className="event__questions">
@@ -256,7 +258,7 @@ export default function Event(props) {
             </p>
             {isFallback && <QuestionPlaceholder />}
             {!isFallback &&
-              event.questions?.length < 1 &&
+              event?.questions?.length < 1 &&
               "Be the first one to ask a question!"}
             {!isFallback &&
               loadedQuestions?.length >= 1 &&
@@ -267,7 +269,7 @@ export default function Event(props) {
                   </div>
                 );
               })}
-            {loadedQuestions.length !== event.questions?.length && (
+            {loadedQuestions.length !== event?.questions?.length && (
               <div
                 style={{
                   display: "flex",
