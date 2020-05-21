@@ -35,13 +35,17 @@ export default function Event(props) {
   const { isFallback, query } = useRouter();
   const [isSnackOpen, setSnackOpen] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState([]);
-  const { data: event = {}, error, mutate: mutateEvent } = useSWR(() => {
-    if (isFallback) {
-      throw new Error();
-    }
+  const { data: event = {}, error, mutate: mutateEvent } = useSWR(
+    () => {
+      if (isFallback) {
+        throw new Error();
+      }
 
-    return `/api/events/${query.id}`;
-  }, fetcher);
+      return `/api/events/${query.id}`;
+    },
+    fetcher,
+    { event: props.event }
+  );
 
   useEffect(() => {
     if (event.questions && loadedQuestions.length < 1) {
@@ -71,7 +75,7 @@ export default function Event(props) {
 
   const handleQuestionSubmit = async (values, formikContext) => {
     mutateEvent(
-      (event = { questions:[] }) => ({
+      (event = { questions: [] }) => ({
         ...event,
         questions: [...event.questions, "temp"],
       }),
