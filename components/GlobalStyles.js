@@ -44,6 +44,7 @@ export default function Styles() {
         font-family: var(--font);
         background: var(--background);
         overflow-x: hidden;
+        width: 100vw;
       }
 
       a {

@@ -267,62 +267,9 @@ export default function Home(props) {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          min-height: calc(100vh - 120px);
+          min-height: 60vh;
           width: 100vw;
           padding: 0 1rem;
-        }
-
-        // USER
-        .user__empty-text {
-          padding-bottom: 1rem;
-        }
-
-        .events {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: center;
-          width: 100vw;
-          overflow-x: scroll;
-        }
-
-        .event {
-          background: var(--background);
-          border-radius: var(--border-radius);
-          display: flex;
-          flex-direction: column;
-          padding: 0.5rem;
-          min-width: 200px;
-          margin: 0 1rem;
-        }
-
-        .event.event--empty {
-          background: transparent;
-          min-width: 0;
-          margin: 0;
-        }
-
-        .event__title {
-          font-size: 1rem;
-          font-weight: bold;
-        }
-
-        .event__stats {
-          display: flex;
-          font-size: 0.75rem;
-        }
-
-        .event__stats > .stat {
-          margin-right: 0.25rem;
-        }
-
-        .user {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 1rem;
-          width: 100vw;
-          background: var(--accent-1);
         }
 
         @media (min-resolution: 3dppx) {

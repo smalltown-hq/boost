@@ -26,7 +26,7 @@ export default function Redirect(props) {
           document.cookie.includes("authed") &&
           location.pathname !== "/home"
             ? "none"
-            : "unset"};
+            : "block"};
         }
       `}</style>
     </>
