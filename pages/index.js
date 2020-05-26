@@ -149,7 +149,7 @@ export default function Home(props) {
               Like what you see? Head over to Product Hunt and leave us a review
               and a vote!
             </p>
-            <a
+            {/* <a
               href="https://www.producthunt.com/posts/vote-button-for-product-hunt?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-vote-button-for-product-hunt"
               target="_blank"
             >
@@ -160,7 +160,7 @@ export default function Home(props) {
                 width="250px"
                 height="54px"
               />
-            </a>
+            </a> */}
           </div>
           <div className="resource">
             <h2 className="resource__title">
