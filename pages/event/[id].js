@@ -155,7 +155,7 @@ export default function Event(props) {
 
   const copy = async () => {
     await navigator.clipboard?.writeText(
-      `https://getboost.app/event/${query.id}`
+      `${new URL(location.href).origin}/event/${query.id}`
     );
     localStorage.setItem(`copy-snack-${query.id}`, +true);
     setSnackOpen(false);

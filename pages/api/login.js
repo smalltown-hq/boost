@@ -5,7 +5,7 @@ export default async (req, res) => {
   if (req.method !== "POST") return res.status(405).end();
 
   try {
-    const tokenRequest = await DataService.fetch("/user/create", {
+    const tokenRequest = await DataService.fetch("/api/user/create", {
       method: "POST",
       headers: {
         authorization: req.headers.authorization,

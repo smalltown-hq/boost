@@ -26,7 +26,7 @@ export default function useAuth({ redirectTo } = {}) {
 
   if (user) {
     user.logout = async () => {
-      await mutate(ApiService.get("/api/logout"));
+      await mutate(fetch("/api/logout"));
       Router.push("/");
     };
   }

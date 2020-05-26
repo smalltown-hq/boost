@@ -37,7 +37,8 @@ export default function Login() {
     // login to our system and persist your user account
     // which is just an email. We also encrypt and set
     // a cookie here that can be used for in later requests
-    const authRequest = await ApiService.post("/api/login", {
+    const authRequest = await fetch("/api/login", {
+      method: "POST",
       headers: { Authorization: `Bearer ${did}` },
     });
 

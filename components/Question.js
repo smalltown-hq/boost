@@ -127,10 +127,13 @@ export default function Question(props) {
         <div className="question__time">
           Asked{" "}
           {!loading &&
-            prettyMs(Date.now() - new Date(question.createdAt).getTime(), {
-              unitCount: 1,
-              verbose: true,
-            })}{" "}
+            prettyMs(
+              Date.now() - new Date(question.createdAt || Date.now()).getTime(),
+              {
+                unitCount: 1,
+                verbose: true,
+              }
+            )}{" "}
           ago
         </div>
         <div className="question__content">

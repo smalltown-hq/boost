@@ -149,6 +149,18 @@ export default function Home(props) {
               Like what you see? Head over to Product Hunt and leave us a review
               and a vote!
             </p>
+            <a
+              href="https://www.producthunt.com/posts/vote-button-for-product-hunt?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-vote-button-for-product-hunt"
+              target="_blank"
+            >
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=22188&theme=light"
+                alt="Vote Button for Product Hunt - A Product Hunt vote button for your site (community-made) | Product Hunt Embed"
+                style={{ width: 250, height: 54 }}
+                width="250px"
+                height="54px"
+              />
+            </a>
           </div>
           <div className="resource">
             <h2 className="resource__title">
