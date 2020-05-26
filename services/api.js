@@ -1,5 +1,4 @@
 function request(route, { method, body, ...options }) {
-  console.log(route, method, body, options);
   return fetch("/api/data", {
     ...options,
     headers: {
