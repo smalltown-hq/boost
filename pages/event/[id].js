@@ -469,7 +469,7 @@ export default function Event(props) {
 
 export async function getStaticProps({ params }) {
   const event = serialize(
-    await DataService.fetch(`/events/${params.id}`).then(
+    await DataService.fetch(`/api/events/${params.id}`).then(
       (r) => r.ok && r.json()
     )
   );
