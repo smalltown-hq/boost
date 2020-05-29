@@ -121,7 +121,7 @@ export default function Home(props) {
               Check out how we built this site using Next.js and other awesome{" "}
               <a href="https://vercel.com">Vercel</a> tech.
             </p>
-            <a href="">
+            <a href="https://youtu.be/u--BudNBKFU">
               <Watch />
             </a>
           </div>

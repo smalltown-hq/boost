@@ -29,7 +29,7 @@ export default function Login() {
     // get decentralized id token from magic link which we can use
     // to authorize requests
     const did = await new Magic(
-      process.env.magicPublicKey
+      process.env.NEXT_PUBLIC__MAGIC_PUB_KEY
     ).auth.loginWithMagicLink({ email: values.email });
 
     setShowDialog(true);
