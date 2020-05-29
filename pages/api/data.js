@@ -1,5 +1,5 @@
-import CookieService from "services/cookie";
-import DataService from "services/data";
+import CookieService from "lib/cookie";
+import DataService from "lib/data";
 
 export default async (req, res) => {
   const { route, body, method } = req.body;

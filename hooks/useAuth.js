@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
-import CookieService from "services/cookie";
-import ApiService from "services/api";
+import CookieService from "lib/cookie";
+import ApiService from "lib/api";
 
 function fetcher(route) {
   return ApiService.get(route)

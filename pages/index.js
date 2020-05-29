@@ -12,8 +12,8 @@ import VercelDeploy from "vectors/buttons/VercelDeploy";
 import Watch from "vectors/buttons/Watch";
 import Read from "vectors/buttons/Read";
 import useAuth from "hooks/useAuth";
-import DeployService from "services/deploy";
-import DataService from "services/data";
+import DeployService from "lib/deploy";
+import DataService from "lib/data";
 
 export default function Home(props) {
   return (

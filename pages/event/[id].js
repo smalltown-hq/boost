@@ -15,10 +15,10 @@ import QuestionPlaceholder from "components/QuestionPlaceholder";
 import serialize from "utils/serialize";
 import Copy from "vectors/Copy";
 import Close from "vectors/Close";
-import ApiService from "services/api";
+import ApiService from "lib/api";
 
 // Used in getStaticProps
-import DataService from "services/data";
+import DataService from "lib/data";
 
 function fetcher(route) {
   return ApiService.get(route).then((r) => (r.ok ? r.json() : {}));

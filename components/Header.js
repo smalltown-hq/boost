@@ -11,7 +11,7 @@ import Menu from "vectors/Menu";
 import Close from "vectors/Close";
 import Button from "components/Button";
 import useAuth from "hooks/useAuth";
-import DeployService from "services/deploy";
+import DeployService from "lib/deploy";
 
 const menuVariants = {
   open: { y: 0 },

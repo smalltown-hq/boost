@@ -11,7 +11,7 @@ import Field from "components/Field";
 import Button from "components/Button";
 import Redirect from "components/Redirect";
 import useAuth from "hooks/useAuth";
-import ApiService from "services/api";
+import ApiService from "lib/api";
 
 const SignInUpSchema = Yup.object({
   email: Yup.string()

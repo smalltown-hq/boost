@@ -12,10 +12,10 @@ import Field from "components/Field";
 import Textarea from "components/Textarea";
 import Button from "components/Button";
 import QuestionPlaceholder from "components/QuestionPlaceholder";
-import DataService from "services/data";
+import DataService from "lib/data";
 import id from "utils/id";
 import ThumbUp from "vectors/emoji/ThumbUp";
-import ApiService from "services/api";
+import ApiService from "lib/api";
 
 function fetcher(route) {
   return ApiService.get(route).then((r) => (r.ok ? r.json() : {}));

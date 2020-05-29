@@ -1,5 +1,5 @@
-import DataService from "services/data";
-import CookieService from "services/cookie";
+import DataService from "lib/data";
+import CookieService from "lib/cookie";
 
 export default async (req, res) => {
   if (req.method !== "POST") return res.status(405).end();

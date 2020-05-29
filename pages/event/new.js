@@ -9,7 +9,7 @@ import Redirect from "components/Redirect";
 import useAuth from "hooks/useAuth";
 import HomeIcon from "vectors/HomeIcon";
 import Curve from "vectors/Curve";
-import ApiService from "services/api";
+import ApiService from "lib/api";
 
 const EventSchema = Yup.object().shape({
   name: Yup.string().required("Without a name, there can be no event."),

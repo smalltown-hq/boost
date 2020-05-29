@@ -5,7 +5,7 @@ import useAuth from "hooks/useAuth";
 import Button from "components/Button";
 import Redirect from "components/Redirect";
 import Right from "vectors/Right";
-import ApiService from "services/api";
+import ApiService from "lib/api";
 
 async function fetcher(route) {
   const eventsRequest = await ApiService.get(route);
