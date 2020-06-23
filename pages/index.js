@@ -143,7 +143,7 @@ export default function Home(props) {
         <div className="resources__pair">
           <div className="resource">
             <h2 className="resource__title">
-              Check us out on <a href="">Product Hunt</a>
+              Check us out on <a href="https://www.producthunt.com/posts/boost-95741e6f-80fc-4aa2-aa7a-f936e50b80bc?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-boost-95741e6f-80fc-4aa2-aa7a-f936e50b80bc">Product Hunt</a>
             </h2>
             <p className="resource__description">
               Like what you see? Head over to Product Hunt and leave us a review
