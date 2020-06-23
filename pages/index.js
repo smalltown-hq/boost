@@ -149,28 +149,28 @@ export default function Home(props) {
               Like what you see? Head over to Product Hunt and leave us a review
               and a vote!
             </p>
-            {/* <a
-              href="https://www.producthunt.com/posts/vote-button-for-product-hunt?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-vote-button-for-product-hunt"
+            <a
+              href="https://www.producthunt.com/posts/boost-95741e6f-80fc-4aa2-aa7a-f936e50b80bc?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-boost-95741e6f-80fc-4aa2-aa7a-f936e50b80bc"
               target="_blank"
             >
               <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=22188&theme=light"
-                alt="Vote Button for Product Hunt - A Product Hunt vote button for your site (community-made) | Product Hunt Embed"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=208604&theme=light"
+                alt="Boost - Increase engagement in online events | Product Hunt Embed"
                 style={{ width: 250, height: 54 }}
                 width="250px"
                 height="54px"
               />
-            </a> */}
+            </a>
           </div>
           <div className="resource">
             <h2 className="resource__title">
               Read about how we built our auth flow
             </h2>
             <p className="resource__description">
-              Checkout the <a href="">Vercel blog</a> to read how we build the
+              Checkout the <a href="https://vercel.com/blog/simple-auth-with-magic-link-and-nextjs">Vercel blog</a> to read how we build the
               auth flow for Boost.
             </p>
-            <a href="">
+            <a href="https://vercel.com/blog/simple-auth-with-magic-link-and-nextjs">
               <Read />
             </a>
           </div>
