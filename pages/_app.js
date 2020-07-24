@@ -49,6 +49,16 @@ export default function BoostApp({ pageProps, Component }) {
         `,
           }}
         />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-129208280-9"
+        />
+        <script>{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-129208280-9');
+       `}</script>
       </Head>
       <Header />
       <Component {...pageProps} />
